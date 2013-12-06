@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dramatic</title>
+  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  
+  <%= link_to 'Login with Twitter', auth_at_provider_path(provider: :twitter) %> 
+  <%= yield %>
+
+</body>
+</html>
