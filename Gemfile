@@ -32,7 +32,6 @@ group :doc do
   gem 'sdoc', require: false
 end
 
-gem 'sorcery'
 gem 'oauth'
 gem 'json'
 gem 'debugger'

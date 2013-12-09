@@ -1,10 +1,6 @@
 Dramatic::Application.routes.draw do
   root 'tweets#new'
-  get "oauths/oauth"
-  get "oauths/callback"
-  post "oauth/callback" => "oauths#callback"
-  get "oauth/callback" => "oauths#callback" # for use with Github
-  get "oauth/:provider" => "oauths#oauth", as: :auth_at_provider
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
