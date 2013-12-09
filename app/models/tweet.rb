@@ -1,9 +1,5 @@
 class Tweet < ActiveRecord::Base
 
-  def initialize
-    @excluded_words = Dictionary.new
-  end
-
   def api_call(path,query,verb)
    
     consumer_key = OAuth::Consumer.new(ENV['TWITTER_REST_API1'],ENV['TWITTER_REST_API2'])
@@ -38,7 +34,7 @@ class Tweet < ActiveRecord::Base
     output = []
     tweet_text.split.each do |word|
       clean_word = strip_punctuation(word)
-      output << clean_word unless @excluded_words.found?(clean_word)
+      output << clean_word unless Dictionary.found?(clean_word)
     end
     output
   end
