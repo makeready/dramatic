@@ -1,5 +1,8 @@
 %h1 Context
 
+= form_for @tweet do |t|
+  = t.text_field :url
+
 - if current_user 
   Welcome, 
   =current_user.name
