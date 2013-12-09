@@ -12,5 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
+//= require jquery.animate-colors-min
+//= require flowtype
 //= require_tree .
