@@ -32,9 +32,20 @@ group :doc do
   gem 'sdoc', require: false
 end
 
+group :assets do
+  gem 'modernizr-rails'
+end
+
+group :development do
+  gem 'better_errors'
+  gem 'binding_of_caller'
+end
+
 gem 'oauth'
 gem 'json'
 gem 'debugger'
+gem 'haml'
+gem 'omniauth-twitter'
 
 
 # Use ActiveModel has_secure_password
