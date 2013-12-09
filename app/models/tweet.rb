@@ -1,6 +1,6 @@
 class Tweet < ActiveRecord::Base
 
-  def api_call(query,verb)
+  def api_call(path,query,verb)
    
     consumer_key = OAuth::Consumer.new(ENV['TWITTER_REST_API1'],ENV['TWITTER_REST_API2'])
 
@@ -10,7 +10,6 @@ class Tweet < ActiveRecord::Base
       "R1aY0sI5GGdapKnKLi68wsu0XujArJX0s2RzSOuctIYtR")
 
     baseurl = "https://api.twitter.com"
-    path    = "/1.1/statuses/show.json"
     address = URI("#{baseurl}#{path}?#{query}")
 
     http             = Net::HTTP.new address.host, address.port
@@ -49,7 +48,7 @@ class Tweet < ActiveRecord::Base
   excluded_words = Dictionary.new
   puts "Enter a tweet ID:"
   tweet_id = gets.chomp 
-  response = api_call(URI.encode_www_form("id" => tweet_id),"GET")
+  response = api_call("/1.1/statuses/show.json",URI.encode_www_form("id" => tweet_id),"GET")
   tweet = nil
   if response.code == '200' then
     tweet = JSON.parse(response.body)
