@@ -33,6 +33,10 @@ group :doc do
 end
 
 gem 'sorcery'
+gem 'oauth'
+gem 'json'
+gem 'debugger'
+
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
