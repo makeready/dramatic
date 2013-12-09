@@ -1,12 +1,9 @@
 class Tweet < ActiveRecord::Base
 
-  def api_call(path,query,verb)
+  def api_call(path,query,verb,current_user)
    
     consumer_key = OAuth::Consumer.new(ENV['TWITTER_REST_API1'],ENV['TWITTER_REST_API2'])
 
-    @request_token = @consumer.get_request_token
-    session[:request_token] = @request_token
-    redirect_to @request_token.authorize_url
     access_token = OAuth::Token.new(
       current_user.token,
       current_user.secret)
@@ -30,9 +27,9 @@ class Tweet < ActiveRecord::Base
 
   end
 
-  def find_keywords(tweet_text,excluded_words)
+  def find_keywords(current_user)
     output = []
-    tweet_text.split.each do |word|
+    load_single_tweet(current_user)["text"].split.each do |word|
       clean_word = strip_punctuation(word)
       output << clean_word unless Dictionary.found?(clean_word)
     end
@@ -43,13 +40,13 @@ class Tweet < ActiveRecord::Base
     word.gsub(/[^[:alnum:]]/, "").downcase
   end
 
-  def get_id_from_tweet_url(url)
-    return url.split("/").last
+  def get_id_from_tweet_url
+    return self.url.split("/").last
   end
 
-  def load_single_tweet(url)
-    tweet_id = get_id_from_tweet_url(url)
-    response = api_call("/1.1/statuses/show.json",URI.encode_www_form("id" => tweet_id),"GET")
+  def load_single_tweet(current_user)
+    tweet_id = get_id_from_tweet_url
+    response = api_call("/1.1/statuses/show.json",URI.encode_www_form("id" => tweet_id),"GET",current_user)
     tweet = nil
     if response.code == '200' then
       tweet = JSON.parse(response.body)
