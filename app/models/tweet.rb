@@ -5,6 +5,10 @@ class Tweet < ActiveRecord::Base
     consumer_key = OAuth::Consumer.new(ENV['TWITTER_REST_API1'],ENV['TWITTER_REST_API2'])
 
     ##REPLACE THIS WITH PROPER OAUTH IMPLEMENTATION
+
+    @request_token = @consumer.get_request_token
+    session[:request_token] = @request_token
+    redirect_to @request_token.authorize_url
     access_token = OAuth::Token.new(
       "24588764-QYPEAaY98bD9udDa1xmirhiEjrUFN3xY5SXEgxQWn",
       "R1aY0sI5GGdapKnKLi68wsu0XujArJX0s2RzSOuctIYtR")

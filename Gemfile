@@ -41,11 +41,11 @@ group :development do
   gem 'binding_of_caller'
 end
 
-gem 'sorcery'
 gem 'oauth'
 gem 'json'
 gem 'debugger'
 gem 'haml'
+gem 'omniauth-twitter'
 
 
 # Use ActiveModel has_secure_password

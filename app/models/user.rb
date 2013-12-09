@@ -1,8 +1,11 @@
 class User < ActiveRecord::Base
-  authenticates_with_sorcery! do |config|
-    config.authentications.class = Authentication
+  def self.create_with_omniauth(auth)
+    create! do |user|
+      user.provider = auth["provider"]
+      user.uid = auth["uid"]
+      user.name = auth["info"]["name"]
+      user.token = auth['credentials']['token']
+      user.secret = auth['credentials']['secret']
+    end
   end
-
-  has_many :authentications, dependent: :destroy
-  accepts_nested_attributes_for :authentications
 end

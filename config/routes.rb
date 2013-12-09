@@ -1,10 +1,9 @@
 Dramatic::Application.routes.draw do
+
   root 'application#index'
-  get "oauths/oauth"
-  get "oauths/callback"
-  post "oauth/callback" => "oauths#callback"
-  get "oauth/callback" => "oauths#callback" # for use with Github
-  get "oauth/:provider" => "oauths#oauth", as: :auth_at_provider
+  get "/auth/:provider/callback" => "sessions#create"
+  get "/signout" => "sessions#destroy", :as => :signout
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
