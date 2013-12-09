@@ -45,6 +45,7 @@ gem 'sorcery'
 gem 'oauth'
 gem 'json'
 gem 'debugger'
+gem 'haml'
 
 
 # Use ActiveModel has_secure_password

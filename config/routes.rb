@@ -1,5 +1,5 @@
 Dramatic::Application.routes.draw do
-  root 'tweets#new'
+  root 'application#index'
   get "oauths/oauth"
   get "oauths/callback"
   post "oauth/callback" => "oauths#callback"

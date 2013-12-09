@@ -42,18 +42,20 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
-    debug_inspector (0.0.2)
     columnize (0.3.6)
-    debugger (1.6.2)
+    debug_inspector (0.0.2)
+    debugger (1.6.3)
       columnize (>= 0.3.1)
-      debugger-linecache (~> 1.2.0
-      debugger-ruby_core_source (~> 1.2.3)
+      debugger-linecache (~> 1.2.0)
+      debugger-ruby_core_source (~> 1.2.4)
     debugger-linecache (1.2.0)
     debugger-ruby_core_source (1.2.4)
     erubis (2.7.0)
     execjs (2.0.2)
     faraday (0.8.8)
       multipart-post (~> 1.2.0)
+    haml (4.0.4)
+      tilt
     hike (1.2.3)
     httpauth (0.2.0)
     i18n (0.6.9)
@@ -145,14 +147,12 @@ DEPENDENCIES
   binding_of_caller
   coffee-rails (~> 4.0.0)
   debugger
+  haml
   jbuilder (~> 1.2)
   jquery-rails
-<<<<<<< HEAD
-  modernizr-rails
-=======
   json
+  modernizr-rails
   oauth
->>>>>>> a4c01d8d3524cc4e591cefe1b45809d0d5bf2559
   pg
   rails (= 4.0.1)
   sass-rails (~> 4.0.0)
