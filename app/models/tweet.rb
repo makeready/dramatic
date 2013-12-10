@@ -113,6 +113,11 @@ class Tweet < ActiveRecord::Base
     return JSON.parse(response.body)
   end
 
+  def delete_list(list_id)
+    response = api_call("/1.1/lists/destroy.json",[["list_id", list_id]],"POST")
+    return JSON.parse(response.body)
+  end
+
   def generate_context
 
     return [reply_to] if reply_to
