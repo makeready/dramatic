@@ -4,6 +4,8 @@ body {
   line-height: 26px;
   color: #ffffff;
   font-family: 'Karla', sans-serif;
+  font-weight: 100;
+  overflow-y: hidden;
 }
 
 h1 {
@@ -13,10 +15,16 @@ h1 {
   text-align: center;
   letter-spacing: 20px;
   margin: 0;
+  margin-bottom: 25px;
+  margin-top: 15px;
 }
 
 .center {
   text-align: center;
   margin: 0 auto;
+}
+
+#wrapper {
+  margin-bottom: $footer-height;
 }
 
