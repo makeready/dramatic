@@ -1,24 +1,23 @@
 %h1 Context
 
-%p.intro_text.center Context allows you to find related tweets by inputting a link.
+%p.intro_text.center Find contextually related tweets in your network by inputting a link.
 
 .center
   - if current_user 
     .center
       = form_for @tweet do |t|
-        = t.text_field :url, class: "biginput"
+        = t.text_field :url, class: "biginput show_twitter_icon"
       Welcome, 
       =current_user.name
       =link_to "Sign Out", signout_path
 
   - else
-    .center
-      .sign_in_with_twitter.dark
-        %a{href: "/auth/twitter"}
-          .divider
-          .container
-            .icon
-            Sign in with Twitter
+    %a.twitter_button_link{href: "/auth/twitter"}
+      .sign_in_button.center
+        .twitter_button_text Sign in with Twitter
+
+
+
 
 
 
