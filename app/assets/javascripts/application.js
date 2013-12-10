@@ -14,4 +14,6 @@
 //= require jquery_ujs
 //= require jquery.animate-colors-min
 //= require flowtype
+//= require oridomi
+//= require index
 //= require_tree .

@@ -1,7 +1,9 @@
 body {
-  background-color: #008040;
+  background-color: $bg-color;
   font-size: 18px;
   line-height: 26px;
+  color: #ffffff;
+  font-family: 'Karla', sans-serif;
 }
 
 h1 {
@@ -12,3 +14,9 @@ h1 {
   letter-spacing: 20px;
   margin: 0;
 }
+
+.center {
+  text-align: center;
+  margin: 0 auto;
+}
+
