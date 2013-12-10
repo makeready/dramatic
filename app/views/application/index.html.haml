@@ -1,12 +1,25 @@
 %h1 Context
 
-= form_for @tweet do |t|
-  = t.text_field :url
+%p.intro_text.center Context allows you to find related tweets by inputting a link.
 
-- if current_user 
-  Welcome, 
-  =current_user.name
-  =link_to "Sign Out", signout_path
-- else
-  =link_to "Sign in with Twitter", "/auth/twitter"
+.center
+  - if current_user 
+    .center
+      = form_for @tweet do |t|
+        = t.text_field :url, class: "biginput"
+      Welcome, 
+      =current_user.name
+      =link_to "Sign Out", signout_path
+
+  - else
+    .center
+      .sign_in_with_twitter.dark
+        %a{href: "/auth/twitter"}
+          .divider
+          .container
+            .icon
+            Sign in with Twitter
+
+
+
 
