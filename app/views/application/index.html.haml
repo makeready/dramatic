@@ -1,15 +1,20 @@
 %h1 Context
 
-%p.intro_text.center Find contextually related tweets in your network by inputting a link.
+- unless current_user
+  %p.intro_text.center Find contextually related tweets in your network by inputting a link.
 
 .center
   - if current_user 
+    .logged_in_section{style: "background-image:url('#{current_user.bgpic}')"} 
+      .profile_card.card
+        =image_tag current_user.picture, class: "profile_img"
+        .profile_text
+          =current_user.name
+        %p.grey Select a recent tweet or paste a link below to search.
+      .recent_tweets
     .center
       = form_for @tweet do |t|
         = t.text_field :url, class: "biginput show_twitter_icon"
-      Welcome, 
-      =current_user.name
-      =link_to "Sign Out", signout_path
 
   - else
     %a.twitter_button_link{href: "/auth/twitter"}

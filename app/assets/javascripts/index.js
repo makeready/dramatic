@@ -10,6 +10,20 @@ $(document).ready(function () {
     },500);
   },6000);
 
+  // get username
+  var username = $('.profile_text').html();
+
+  // mouseover logout for profile box
+  $('.profile_card').mouseenter(function () {
+    $('.profile_card').css('background-color','rgba(255,255,255,0.9)');
+    $('.profile_text').html("<a href='/signout'class='profile_sign_out'>Sign Out</a>");
+  })
+ 
+ $('.profile_card').mouseleave(function () {
+    $('.profile_card').css('background-color','rgba(255,255,255,0.8)');
+   $('.profile_text').html(username);
+ })
+
 
   // fold.oriDomi('reveal', 80);
   // setTimeout(function(){
