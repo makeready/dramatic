@@ -107,9 +107,9 @@ class Tweet < ActiveRecord::Base
     end
   end
 
-  def parse_list(list_id)
+  def parse_list(list_id,listsize)
     max_id = tweet_id
-    response = api_call("1.1/lists/statuses.json",[["list_id", list_id],["max_id", max_id],['count',3200]],"GET")
+    response = api_call("1.1/lists/statuses.json",[["list_id", list_id],["max_id", max_id],['count',listsize]],"GET")
     return JSON.parse(response.body)
   end
 
@@ -118,21 +118,21 @@ class Tweet < ActiveRecord::Base
     return JSON.parse(response.body)
   end
 
-  def generate_context
+  def generate_context(numtweets,listsize)
 
     return [reply_to] if reply_to
 
     match_score = Hash.new(0)
 
     list_id = create_new_list(followings)
-    parse_list(list_id).each do |tweet|
+    parse_list(list_id,listsize).each do |tweet|
       clean_tweet = strip_punctuation(tweet.text)
       find_keywords.each do |keyword|
         match_score[tweet] += 1 if clean_tweet.include?(keyword)
       end
     end
     delete_list(list_id)
-    return match_score.sort_by{|k,v| v}.take(2)#.map{|x| x[0]}
+    return match_score.sort_by{|k,v| v}.take(numtweets)#.map{|x| x[0]}
     # RETURNS [[tweet,score],[tweet,score]] UNCOMMENT TO JUST GET [tweet,tweet]
   end
 end
