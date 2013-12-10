@@ -12,6 +12,10 @@
           =current_user.name
         %p.grey Select a recent tweet or paste a link below to search.
       .recent_tweets
+        / - current_user.feed.each do |tweet|
+          .tweet_card
+            = image_tag tweet['text']
+
     .center
       = form_for @tweet do |t|
         = t.text_field :url, class: "biginput show_twitter_icon"
@@ -20,6 +24,7 @@
     %a.twitter_button_link{href: "/auth/twitter"}
       .sign_in_button.center
         .twitter_button_text Sign in with Twitter
+
 
 
 
