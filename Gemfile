@@ -47,6 +47,7 @@ gem 'oauth'
 gem 'json'
 gem 'haml'
 gem 'omniauth-twitter'
+gem 'kaminari'
 
 
 # Use ActiveModel has_secure_password

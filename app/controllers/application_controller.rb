@@ -6,7 +6,10 @@ class ApplicationController < ActionController::Base
   
   def index
     @tweet = Tweet.new
-    @user_feed = current_user.feed if current_user
+    if current_user
+      array = current_user.feed
+      @user_feed = Kaminari.paginate_array(array).page(params[:page]).per(3)
+    end
   end
 
   def create

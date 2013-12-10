@@ -5,16 +5,29 @@
 
 .center
   - if current_user 
+
     .logged_in_section{style: "background-image:url('#{current_user.bgpic}')"} 
-      .profile_card.card
-        =image_tag current_user.picture, class: "profile_img"
-        .profile_text
-          =current_user.name
+      .profile_card
+        .profile_top
+          =image_tag current_user.picture, class: "profile_img"
+          .profile_text
+            =current_user.name
+
+        %hr
+
         %p.grey Select a recent tweet or paste a link below to search.
+
       .recent_tweets
-        /- current_user.feed.each do |tweet|
-        / .tweet_card
-        /   = image_tag tweet['text']
+        %h2.recent_tweets_header Recent Tweets
+        - @user_feed.each do |tweet|
+          .tweet_card{data: {'id' => tweet['id_str'], 'user' => tweet['user']['screen_name'] }}
+            = image_tag tweet['user']['profile_image_url'], class: "tweet_card_img"
+            .grey.tweet_card_header= tweet['user']['screen_name']
+            .tweet_card_text= tweet['text']
+
+      .paginate
+        = link_to_previous_page @user_feed, 'Prev Page'
+        = link_to_next_page @user_feed, 'Next Page'
 
     .center
       = form_for @tweet do |t|
@@ -24,12 +37,3 @@
     %a.twitter_button_link{href: "/auth/twitter"}
       .sign_in_button.center
         .twitter_button_text Sign in with Twitter
-
-%p= current_user.feed
-
-
-
-
-
-
-

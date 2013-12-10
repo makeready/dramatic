@@ -65,6 +65,9 @@ GEM
     jquery-ui-rails (4.1.0)
       railties (>= 3.1.0)
     json (1.8.1)
+    kaminari (0.15.0)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -147,6 +150,7 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails
   json
+  kaminari
   modernizr-rails
   oauth
   omniauth-twitter
