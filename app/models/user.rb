@@ -11,4 +11,29 @@ class User < ActiveRecord::Base
       user.bgpic            = auth['extra']['raw_info']['profile_background_image_url']
     end
   end
+
+  def feed
+    consumer_key = OAuth::Consumer.new(ENV['TWITTER_REST_API1'],ENV['TWITTER_REST_API2'])
+    access_token = OAuth::Token.new(token,secret)
+    path = "/1.1/statuses/home_timeline.json"
+    encoded_query = URI.encode_www_form([["count",3200]])
+    baseurl = "https://api.twitter.com"
+    verb = "GET"
+    address = URI("#{baseurl}#{path}?#{encoded_query}")
+
+    http             = Net::HTTP.new address.host, address.port
+    http.use_ssl     = true
+    http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+
+    if verb == "GET"
+      request = Net::HTTP::Get.new address.request_uri
+    elsif verb == "POST"
+      request = Net::HTTP::Post.new address.request_uri
+    end
+
+    request.oauth! http, consumer_key, access_token
+    http.start
+    response = http.request request
+    return JSON.parse(response.body)
+  end
 end

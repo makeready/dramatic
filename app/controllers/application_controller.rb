@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   
   def index
     @tweet = Tweet.new
+    @user_feed = current_user.feed if current_user
   end
 
   def create

@@ -108,7 +108,9 @@ class Tweet < ActiveRecord::Base
   end
 
   def parse_list(list_id)
-    timeline = api_call("1.1/lists/statuses.json",[["list_id", list_id],["include_rts",true],["max_id",tweet_id]])
+    max_id = tweet_id
+    response = api_call("1.1/lists/statuses.json",[["list_id", list_id],["max_id", max_id],['count',3200]],"GET")
+    return JSON.parse(response.body)
   end
 
   def generate_context
@@ -118,8 +120,7 @@ class Tweet < ActiveRecord::Base
     match_score = Hash.new(0)
 
     list_id = create_new_list(followings)
-    tweets_to_scan = parse_list(list_id)
-    tweets_to_scan.each do |tweet|
+    parse_list(list_id).each do |tweet|
       clean_tweet = strip_punctuation(tweet.text)
       find_keywords.each do |keyword|
         match_score[tweet] += 1 if clean_tweet.include?(keyword)
