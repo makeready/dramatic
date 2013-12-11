@@ -41,13 +41,14 @@
   color: darken($bg-color, 15%);
   position: fixed;
   bottom: 0;
-  padding-left: 20px;
+  padding-left: 15px;
   padding-bottom: 10px;
-  background-color: rgba(0,0,0,0.1);
+  padding-top: 10px;
+  background-color: darken($bg-color, 5%);
   width: 100%;
   height: $footer-height;
-  line-height: 25px;
-  padding-top: 10px;
+  line-height: $footer-height;
+  font-size: 12px;
   a {
     text-decoration: none;
   }
@@ -144,6 +145,8 @@
 
 .tweet_card_text {
   padding-left: 70px;
+  padding-right: 12px;
+  padding-top: 6px;
   text-align: left;
   font-size: 16px;
   line-height: 18px;
