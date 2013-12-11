@@ -21,6 +21,16 @@ $(document).ready(function () {
    $('.profile_text').html(username);
   });
 
+  // enable submit button on input
+  $('.biginput').keyup(function() {
+   if($(this).val() !== '') {
+    $('.submit_button').fadeIn();
+  } else {
+    $('.submit_button').fadeOut();
+  }
+  });
+
+
   // var fold = $('.logged_in_section').oriDomi({
   //   speed: 1000
   // });
