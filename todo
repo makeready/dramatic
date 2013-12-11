@@ -6,5 +6,4 @@ Set up pagination button on userfeed to dynamically make api calls
 
 Todo:
   - If user already logged in then logged out, check for 'one click login', else option to log in as diff user
-  - Direct link to tweet
   - Find original tweet rather than RT
