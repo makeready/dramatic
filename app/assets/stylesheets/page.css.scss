@@ -138,7 +138,7 @@
 .tweet_card_img {
   float: left;
   margin-top: 29px;
-  margin-left: 10px;
+  margin-left: 3px;
   border: 2px solid $grey-color;
 }
 
@@ -160,14 +160,21 @@
   color: #000000;
   padding: 5px;
   position: relative;
+  text-decoration: none;
   top: 3px;
   :link, :visited {
     color: #000000;
   }
   :hover {
     color: #000000;
-    background-color: rgba(255,255,255,1);
+    background-color: #000000;
   }
+}
+
+a.paginate_button:hover {
+  background-color: $dark-grey-color;
+  opacity: 0.8;
+  color: #ffffff;
 }
 
 
