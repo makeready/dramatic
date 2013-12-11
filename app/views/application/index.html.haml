@@ -19,15 +19,7 @@
 
       .recent_tweets
         %h2.recent_tweets_header Recent Tweets
-        - @user_feed.each do |tweet|
-          .tweet_card{data: {'id' => tweet['id_str'], 'user' => tweet['user']['screen_name'] }}
-            = image_tag tweet['user']['profile_image_url'], class: "tweet_card_img"
-            .grey.tweet_card_header= tweet['user']['screen_name']
-            .tweet_card_text= tweet['text']
-
-      .paginate
-        = link_to_previous_page @user_feed, 'Prev Page'
-        = link_to_next_page @user_feed, 'Next Page'
+        .tweet_container= render partial: 'tweets'
 
     .center
       = form_for @tweet do |t|

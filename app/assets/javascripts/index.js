@@ -21,30 +21,13 @@ $(document).ready(function () {
    $('.profile_text').html(username);
   });
 
-  // tweet card hover
-  $('.tweet_card').mouseenter(function () {
-    $(this).css('background-color','rgba(224, 238, 221,0.95)');
-  });
-  $('.tweet_card').mouseleave(function () {
-    $(this).css('background-color','rgba(255,255,255,0.95)');
-  });
+  // var fold = $('.logged_in_section').oriDomi({
+  //   speed: 1000
+  // });
 
-  // tweet card paste to box
-  $('.tweet_card').on('click', function (){
-    var id = $(this).data('id');
-    var user = $(this).data('user');
-    $('.biginput').val('http://twitter.com/' + user + '/status/' + id);
-  }); 
-
-  // fold.oriDomi('reveal', 80);
+  // fold.oriDomi('reveal', 20);
   // setTimeout(function(){
   //   fold.oriDomi('foldUp');
   // },3000);
-
-  // var fold = $('h1').oriDomi({
-  //   speed: 1000,
-  //   shadingIntensity: 0
-  // });
-
 
 });

@@ -1,0 +1,24 @@
+- @user_feed.each do |tweet|
+  .tweet_card{data: {'id' => tweet['id_str'], 'user' => tweet['user']['screen_name'] }}
+    = image_tag tweet['user']['profile_image_url'], class: "tweet_card_img"
+    .grey.tweet_card_header= tweet['user']['screen_name']
+    .tweet_card_text= tweet['text']
+.paginates
+  = link_to_previous_page @user_feed, 'Prev', class: "paginate_button", remote: true
+  = link_to_next_page @user_feed, 'Next', class: "paginate_button", remote: true
+
+:javascript
+  // tweet card hover
+  $('.tweet_card').mouseenter(function () {
+    $(this).css('background-color','rgba(224, 238, 221,0.95)');
+  });
+  $('.tweet_card').mouseleave(function () {
+    $(this).css('background-color','rgba(255,255,255,0.95)');
+  });
+
+  // tweet card paste to box
+  $('.tweet_card').on('click', function (){
+    var id = $(this).data('id');
+    var user = $(this).data('user');
+    $('.biginput').val('http://twitter.com/' + user + '/status/' + id);
+  }); 

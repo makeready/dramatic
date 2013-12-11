@@ -155,12 +155,18 @@
   font-size: 16px;
 }
 
-.paginate {
+.paginate_button {
   background-color: rgba(255,255,255,0.8);
-  margin-left: 290px;
   color: #000000;
-  :link, :hover, :visited {
+  padding: 5px;
+  position: relative;
+  top: 3px;
+  :link, :visited {
     color: #000000;
+  }
+  :hover {
+    color: #000000;
+    background-color: rgba(255,255,255,1);
   }
 }
 
