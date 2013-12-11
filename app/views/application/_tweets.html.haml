@@ -1,6 +1,8 @@
 - @user_feed.each do |tweet|
   .tweet_card{data: {'id' => tweet['id_str'], 'user' => tweet['user']['screen_name'] }}
-    = image_tag tweet['user']['profile_image_url'], class: "tweet_card_img"
+    .twitter_card_img_section
+      = image_tag tweet['user']['profile_image_url'], class: "tweet_card_img"
+      = link_to (image_tag 'twitter_blue.png'), "http://twitter.com/" + tweet['user']['screen_name'] + "/status/" + tweet['id_str'], class: "blue_twitter_link", target: "_blank"
     .grey.tweet_card_header= tweet['user']['screen_name']
     .tweet_card_text= tweet['text']
 .paginates
@@ -10,19 +12,24 @@
 :javascript
   // tweet card hover
   $('.tweet_card').mouseenter(function () {
-    $(this).css('background-color','#494949');
+    $(this).css('background-color','#616161');
     $(this).css('color', '#ffffff');
+    $(this).find('.tweet_card_header').css('color','#000000');
+    $(this).find('.blue_twitter_link').css('visibility','visible');
     $(this).css('opacity', 0.95)
   });
   $('.tweet_card').mouseleave(function () {
     $(this).css('background-color','rgba(255,255,255,0.95)');
     $(this).css('color','#000000');
+    $(this).find('.tweet_card_header').css('color','#6d6d6d');
+    $(this).find('.blue_twitter_link').css('visibility','hidden');
     $(this).css('opacity',1);
   });
 
   // tweet card paste to box
   $('.tweet_card').on('click', function (){
-    var id = $(this).data('id');
-    var user = $(this).data('user');
+    var id = $(this).parent().data('id');
+    var user = $(this).parent().data('user');
     $('.biginput').val('http://twitter.com/' + user + '/status/' + id);
-  }); 
+  });
+

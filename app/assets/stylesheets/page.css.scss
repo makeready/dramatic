@@ -141,6 +141,7 @@
   margin-top: 29px;
   margin-left: 3px;
   border: 2px solid $grey-color;
+  z-index: 5;
 }
 
 .tweet_card_text {
@@ -156,6 +157,19 @@
 .tweet_card_header {
   background-color: rgba(0,0,0,0.1);
   font-size: 16px;
+}
+
+.blue_twitter_link {
+  position: absolute;
+  z-index: 10;
+  top: 28px;
+  left: 3px;
+  float: left;
+  visibility: hidden;
+}
+
+.twitter_card_img_section {
+  position: relative;
 }
 
 .paginate_button {
