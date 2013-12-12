@@ -94,19 +94,21 @@ class Tweet < ActiveRecord::Base
 
   def populate_empty_list(list_id, followings)
     followings.sort!
-    numcalls = round_up(followings.length,100) / 100
+    divisor = 40
+    numcalls = round_up(followings.length,divisor) / divisor
+    numcalls = 13 if numcalls > 13
     numcalls.times do |call|
       puts "***********************************"
       puts "***********************************"
       puts "***********************************"
       puts "***********************************"
       puts "CALL NUMBER #{call+1} OF #{numcalls}. FOLLOWINGS.LENGTH = #{followings.length}"
-      puts "#{(call)*100}..#{((call+1)*100)-1}"
+      puts "#{(call)*divisor}..#{((call+1)*divisor)-1}"
       puts "***********************************"
       puts "***********************************"
       puts "***********************************"
       puts "***********************************"
-      users = followings[(call)*100..((call+1)*100)-1].join(',')
+      users = followings[(call)*divisor..((call+1)*divisor)-1].join(',')
       puts users
       api_call("/1.1/lists/members/create_all.json",[["list_id", list_id],["user_id",users]],"POST")
     end
@@ -145,12 +147,16 @@ class Tweet < ActiveRecord::Base
     parse_list(list_id,listsize).each do |tweet|
       clean_tweet = strip_punctuation(tweet["text"])
       keywords.each do |keyword|
-        match_score[tweet] += 1 if clean_tweet.include?(keyword)
-        puts "Added 1 to match score, #{clean_tweet} included #{keyword}."
+        if clean_tweet.include?(keyword)
+          match_score[tweet] += 1 
+          # puts "Added 1 to match score, #{clean_tweet} included #{keyword}."
+          # puts "New match score is #{match_score[tweet]}."
+        end
       end
     end
-    delete_list(list_id)
-    return match_score.sort_by{|k,v| v}.take(numtweets)
+    match_score.each {|key, value| puts "#{key} is #{value}" }
+    # delete_list(list_id)
+    return match_score.sort_by{|k,v| v}.reverse.take(numtweets)
     # RETURNS [[tweet,score],[tweet,score]]
   end
 end
