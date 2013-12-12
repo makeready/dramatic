@@ -85,6 +85,8 @@ GEM
     omniauth-twitter (1.0.1)
       multi_json (~> 1.3)
       omniauth-oauth (~> 1.0)
+    oridomi-rails (1.0.0)
+      railties (>= 3.0.0)
     pg (0.17.0)
     polyglot (0.3.3)
     rack (1.5.2)
@@ -154,6 +156,7 @@ DEPENDENCIES
   modernizr-rails
   oauth
   omniauth-twitter
+  oridomi-rails
   pg
   rails (= 4.0.2)
   sass-rails (~> 4.0.0)

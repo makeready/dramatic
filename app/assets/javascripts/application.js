@@ -12,7 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery.ui.all
+//= require jquery.ui.effect
 //= require jquery.animate-colors-min
 //= require flowtype
 //= require oridomi
