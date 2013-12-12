@@ -1,7 +1,7 @@
 <div>Tweet: <%= @tweet["text"] %></div>
 <div>Keywords: <%= @tweet.find_keywords %></div>
 
-<div><% @tweet.generate_context(2,500).each do |tweet| %></div>
+<div><% @tweet.generate_context(5,1000).each do |tweet| %></div>
 				Text: <%= tweet[0]["text"] %>
 				Match score: <%= tweet[1] %>
 		<% end %>

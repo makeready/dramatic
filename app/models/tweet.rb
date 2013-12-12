@@ -146,10 +146,11 @@ class Tweet < ActiveRecord::Base
       clean_tweet = strip_punctuation(tweet["text"])
       keywords.each do |keyword|
         match_score[tweet] += 1 if clean_tweet.include?(keyword)
+        puts "Added 1 to match score, #{clean_tweet} included #{keyword}."
       end
     end
-    #delete_list(list_id)
-    return match_score.sort_by{|k,v| v}.take(numtweets)#.map{|x| x[0]}
-    # RETURNS [[tweet,score],[tweet,score]] UNCOMMENT TO JUST GET [tweet,tweet]
+    delete_list(list_id)
+    return match_score.sort_by{|k,v| v}.take(numtweets)
+    # RETURNS [[tweet,score],[tweet,score]]
   end
 end
