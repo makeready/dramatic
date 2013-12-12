@@ -30,14 +30,23 @@ $(document).ready(function () {
   }
   });
 
+  // change button & fold dom after click
+  $('.submit_button').on('click', function (event) {
+    event.preventDefault();
+    $('.submit_button').val('Please wait...').animate({backgroundColor: '#c4835b'});
 
-  // var fold = $('.logged_in_section').oriDomi({
-  //   speed: 1000
-  // });
+    window.setTimeout(function () {
+      $('.submit_button').fadeOut(2000);
+      }, 3000);
 
-  // fold.oriDomi('reveal', 20);
-  // setTimeout(function(){
-  //   fold.oriDomi('foldUp');
-  // },3000);
+      var fold = new OriDomi('.logged_in_section',{
+        speed: 3000
+      });
+
+      fold.foldUp(function () {
+        $('.logged_in_section').slideUp();
+      });
+  });
+
 
 });
