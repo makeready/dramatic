@@ -6,3 +6,7 @@ Set up pagination button on userfeed to dynamically make api calls
 
 Todo:
   - If user already logged in then logged out, check for 'one click login', else option to log in as diff user
+
+We should cache user.feed on login and give the user a button to manually refresh it
+
+Disable submit once algorithm is running

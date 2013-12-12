@@ -1,3 +1,7 @@
-<%= @tweet %>
-<%= @tweet.load_tweet_json(current_user) %>
-<%= @tweet.find_keywords(current_user) %>
+<div>Tweet: <%= @tweet["text"] %></div>
+<div>Keywords: <%= @tweet.find_keywords %></div>
+
+<div><% @tweet.generate_context(2,500).each do |tweet| %></div>
+				Text: <%= tweet[0]["text"] %>
+				Match score: <%= tweet[1] %>
+		<% end %>

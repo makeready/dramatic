@@ -3,6 +3,7 @@ class Tweet < ActiveRecord::Base
 
   has_many :context_tweets, class_name: "Tweet", foreign_key: 'inspired_id'
   belongs_to :inspired_tweet, class_name: "Tweet"
+  belongs_to :user
   #enables tweet.context_tweets and tweet.inspired_tweet
   #
   #  CONTEXT_TWEET CONTEXT_TWEET
@@ -10,17 +11,13 @@ class Tweet < ActiveRecord::Base
   #              |
   #        INSPIRED_TWEET
 
-  def current_user
-    @current_user ||= User.find(session[:user_id]) if session[:user_id]
-  end
-
   def api_call(path,query,verb)
    
     consumer_key = OAuth::Consumer.new(ENV['TWITTER_REST_API1'],ENV['TWITTER_REST_API2'])
 
     access_token = OAuth::Token.new(
-      current_user.token,
-      current_user.secret)
+      self.user.token,
+      self.user.secret)
     encoded_query = URI.encode_www_form(query)
     baseurl = "https://api.twitter.com"
     address = URI("#{baseurl}#{path}?#{encoded_query}")
@@ -34,6 +31,8 @@ class Tweet < ActiveRecord::Base
     elsif verb == "POST"
       request = Net::HTTP::Post.new address.request_uri
     end
+
+    puts "Api call: #{address}"
 
     request.oauth! http, consumer_key, access_token
     http.start
@@ -73,26 +72,42 @@ class Tweet < ActiveRecord::Base
     load_tweet_json["in_reply_to_status_id_str"]
   end
 
-  def followings
-    response = api_call("/1.1/friends/ids.json",[["user_id", current_user.twitter_id],["stringify_ids", true]],"GET")
-    return JSON.parse(response.body.ids)
+  def find_poster_id
+    self.poster_id = load_tweet_json["user"]["id_str"]
+  end
+
+  def find_followings
+    response = api_call("/1.1/friends/ids.json",[["user_id", poster_id],["stringify_ids", true]],"GET")
+    return JSON.parse(response.body)["ids"]
   end
 
   def create_new_list(followings)
-    populate_empty_list(create_empty_list, followings)
+    list_id = populate_empty_list(create_empty_list, followings)
     return list_id
   end
 
   def create_empty_list
     timestamp = Time.now.to_i.to_s
     response = api_call("/1.1/lists/create.json",[["name", "context#{timestamp}"]],"POST")
-    return JSON.parse(response.body.id)
+    return JSON.parse(response.body)["id_str"]
   end
 
   def populate_empty_list(list_id, followings)
+    followings.sort!
     numcalls = round_up(followings.length,100) / 100
     numcalls.times do |call|
-      users = followings[(call-1)*100..(call*100)-1].join(",")
+      puts "***********************************"
+      puts "***********************************"
+      puts "***********************************"
+      puts "***********************************"
+      puts "CALL NUMBER #{call+1} OF #{numcalls}. FOLLOWINGS.LENGTH = #{followings.length}"
+      puts "#{(call)*100}..#{((call+1)*100)-1}"
+      puts "***********************************"
+      puts "***********************************"
+      puts "***********************************"
+      puts "***********************************"
+      users = followings[(call)*100..((call+1)*100)-1].join(',')
+      puts users
       api_call("/1.1/lists/members/create_all.json",[["list_id", list_id],["user_id",users]],"POST")
     end
     return list_id
@@ -110,7 +125,7 @@ class Tweet < ActiveRecord::Base
 
   def parse_list(list_id,listsize)
     max_id = tweet_id
-    response = api_call("1.1/lists/statuses.json",[["list_id", list_id],["max_id", max_id],['count',listsize]],"GET")
+    response = api_call("/1.1/lists/statuses.json",[["list_id", list_id],["max_id", max_id],['count',listsize]],"GET")
     return JSON.parse(response.body)
   end
 
@@ -124,15 +139,16 @@ class Tweet < ActiveRecord::Base
     return [reply_to] if reply_to
 
     match_score = Hash.new(0)
+    list_id = create_new_list(find_followings)
+    keywords = find_keywords
 
-    list_id = create_new_list(followings)
     parse_list(list_id,listsize).each do |tweet|
-      clean_tweet = strip_punctuation(tweet.text)
-      find_keywords.each do |keyword|
+      clean_tweet = strip_punctuation(tweet["text"])
+      keywords.each do |keyword|
         match_score[tweet] += 1 if clean_tweet.include?(keyword)
       end
     end
-    delete_list(list_id)
+    #delete_list(list_id)
     return match_score.sort_by{|k,v| v}.take(numtweets)#.map{|x| x[0]}
     # RETURNS [[tweet,score],[tweet,score]] UNCOMMENT TO JUST GET [tweet,tweet]
   end
