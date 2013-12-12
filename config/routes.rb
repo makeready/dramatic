@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 Dramatic::Application.routes.draw do
 
   root 'application#index'

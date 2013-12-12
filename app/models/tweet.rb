@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Tweet < ActiveRecord::Base
 
   has_many :context_tweets, class_name: "Tweet", foreign_key: 'inspired_id'

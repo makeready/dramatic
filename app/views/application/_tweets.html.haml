@@ -1,8 +1,21 @@
 - @user_feed.each do |tweet|
-  .tweet_card{data: {'id' => tweet['id_str'], 'user' => tweet['user']['screen_name'] }}
-    = image_tag tweet['user']['profile_image_url'], class: "tweet_card_img"
-    .grey.tweet_card_header= tweet['user']['screen_name']
-    .tweet_card_text= tweet['text']
+
+  - if tweet['retweeted_status']
+    .tweet_card{data: {'id' => tweet['retweeted_status']['id_str'], 'user' => tweet['retweeted_status']['user']['screen_name'], 'retweeted' => 'true' }}
+      .twitter_card_img_section
+        = image_tag tweet['user']['profile_image_url'], class: "tweet_card_img"
+        = link_to (image_tag 'rt_blue.png'), "http://twitter.com/" + tweet['user']['screen_name'] + "/status/" + tweet['id_str'], class: "blue_twitter_link", target: "_blank"
+      .grey.tweet_card_header= tweet['user']['screen_name'] + " " + "RETWEET"
+      .tweet_card_text= tweet['text'].html_safe
+
+  - else
+    .tweet_card{data: {'id' => tweet['id_str'], 'user' => tweet['user']['screen_name'], 'retweeted' => 'false' }}
+      .twitter_card_img_section
+        = image_tag tweet['user']['profile_image_url'], class: "tweet_card_img"
+        = link_to (image_tag 'twitter_blue.png'), "http://twitter.com/" + tweet['user']['screen_name'] + "/status/" + tweet['id_str'], class: "blue_twitter_link", target: "_blank"
+      .grey.tweet_card_header= tweet['user']['screen_name']
+      .tweet_card_text= tweet['text'].html_safe
+
 .paginates
   = link_to_previous_page @user_feed, 'Prev', class: "paginate_button", remote: true
   = link_to_next_page @user_feed, 'Next', class: "paginate_button", remote: true
@@ -10,13 +23,17 @@
 :javascript
   // tweet card hover
   $('.tweet_card').mouseenter(function () {
-    $(this).css('background-color','#494949');
+    $(this).css('background-color','#616161');
     $(this).css('color', '#ffffff');
+    $(this).find('.tweet_card_header').css('color','#000000');
+    $(this).find('.blue_twitter_link').css('visibility','visible');
     $(this).css('opacity', 0.95)
   });
   $('.tweet_card').mouseleave(function () {
     $(this).css('background-color','rgba(255,255,255,0.95)');
     $(this).css('color','#000000');
+    $(this).find('.tweet_card_header').css('color','#6d6d6d');
+    $(this).find('.blue_twitter_link').css('visibility','hidden');
     $(this).css('opacity',1);
   });
 
@@ -25,4 +42,6 @@
     var id = $(this).data('id');
     var user = $(this).data('user');
     $('.biginput').val('http://twitter.com/' + user + '/status/' + id);
-  }); 
+    $('.biginput').keyup();
+  });
+

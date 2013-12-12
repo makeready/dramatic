@@ -3,3 +3,6 @@ Example tweets that need to work:
 https://twitter.com/fazlalizadeh/status/410088541100584960
 
 Set up pagination button on userfeed to dynamically make api calls
+
+Todo:
+  - If user already logged in then logged out, check for 'one click login', else option to log in as diff user

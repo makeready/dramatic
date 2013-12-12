@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Dictionary < ActiveRecord::Base
   def self.found?(word)
     pronouns = ['all','another','any','anybody','anyone','anything','both','each','other','either','everybody','everyone','everything','few','he','her','hers','herself','him','himself','his','i','it','its','itself','many','me','mine','more','most','much','my','myself','neither','noone','nobody','none','nothing','one','other','others','our','ours','ourselves','several','she','some','somebody','someone','something','that','their','theirs','them','themselves','these','they','this','those','us','we','what','whatever','which','whichever','who','whoever','whom','whomever','whose','you','your','yours','yourself','yourselves']

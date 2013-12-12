@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 Kaminari.configure do |config|
   config.default_per_page = 3
   config.max_per_page = 3
