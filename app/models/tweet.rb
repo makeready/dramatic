@@ -155,7 +155,7 @@ class Tweet < ActiveRecord::Base
       end
     end
     match_score.each {|key, value| puts "#{key} is #{value}" }
-    # delete_list(list_id)
+    delete_list(list_id)
     return match_score.sort_by{|k,v| v}.reverse.take(numtweets)
     # RETURNS [[tweet,score],[tweet,score]]
   end
