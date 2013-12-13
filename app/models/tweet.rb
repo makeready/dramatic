@@ -94,24 +94,27 @@ class Tweet < ActiveRecord::Base
 
   def populate_empty_list(list_id, followings)
     followings.sort!
+    threads = []
     divisor = 40
     numcalls = round_up(followings.length,divisor) / divisor
     numcalls = 13 if numcalls > 13
     numcalls.times do |call|
-      puts "***********************************"
-      puts "***********************************"
-      puts "***********************************"
-      puts "***********************************"
-      puts "CALL NUMBER #{call+1} OF #{numcalls}. FOLLOWINGS.LENGTH = #{followings.length}"
-      puts "#{(call)*divisor}..#{((call+1)*divisor)-1}"
-      puts "***********************************"
-      puts "***********************************"
-      puts "***********************************"
-      puts "***********************************"
-      users = followings[(call)*divisor..((call+1)*divisor)-1].join(',')
-      puts users
-      api_call("/1.1/lists/members/create_all.json",[["list_id", list_id],["user_id",users]],"POST")
+      threads << Thread.new do 
+        puts "***********************************"
+        puts "***********************************"
+        puts "***********************************"
+        puts "***********************************"
+        puts "CALL NUMBER #{call+1} OF #{numcalls}. FOLLOWINGS.LENGTH = #{followings.length}"
+        puts "#{(call)*divisor}..#{((call+1)*divisor)-1}"
+        puts "***********************************"
+        puts "***********************************"
+        puts "***********************************"
+        puts "***********************************"
+        users = followings[(call)*divisor..((call+1)*divisor)-1].join(',')
+        puts users
+        api_call("/1.1/lists/members/create_all.json",[["list_id", list_id],["user_id",users]],"POST")
     end
+    threads.each { |t| t.join }
     return list_id
   end
 

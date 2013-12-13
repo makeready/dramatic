@@ -10,3 +10,5 @@ Todo:
 We should cache user.feed on login and give the user a button to manually refresh it
 
 Disable submit once algorithm is running
+
+Thread populate list
