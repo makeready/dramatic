@@ -32,7 +32,7 @@ $(document).ready(function () {
 
   // change button & fold dom after click
   $('.submit_button').on('click', function (event) {
-    event.preventDefault();
+    //event.preventDefault();
     $('.submit_button').val('Please wait...').animate({backgroundColor: '#c4835b'});
 
     window.setTimeout(function () {

@@ -113,6 +113,7 @@ class Tweet < ActiveRecord::Base
         users = followings[(call)*divisor..((call+1)*divisor)-1].join(',')
         puts users
         api_call("/1.1/lists/members/create_all.json",[["list_id", list_id],["user_id",users]],"POST")
+      end
     end
     threads.each { |t| t.join }
     return list_id
