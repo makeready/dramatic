@@ -18,8 +18,11 @@
   <%= yield %>
 </div>
 
+<% if current_user %>
 <div class="footer" style="background-color:<%= ave_color(20) %>;
-                          color:<%= ave_color(-20) %>">by <%= link_to "Greg Ward", "https://github.com/makeready", target: "_blank" %> &amp; <%= link_to "Leopold Wicht", "https://github.com/glopoel", target: "_blank" %></div>
+                          color:<%= ave_color(-40) %>;
+                          ">by <%= link_to "Greg Ward", "https://github.com/makeready", target: "_blank" %> &amp; <%= link_to "Leopold Wicht", "https://github.com/glopoel", target: "_blank" %></div>
+<% end %>
 
 </body>
 </html>

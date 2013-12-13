@@ -50,15 +50,19 @@
   a {
     text-decoration: none;
   }
+  :hover, :link, :visited {
+    color: inherit;
+  }
 }
 
 /* logged in */
 
 .logged_in_section {
   padding: 10px;
-  padding-bottom: 20px;
+  padding-bottom: 25px;
   border: 1px solid black;
   height: 320px;
+  border: 5px solid rgba(0,0,0,0.3);
 }
 
 .profile_card {
@@ -171,6 +175,20 @@ a.paginate_button:hover {
   background-color: $dark-grey-color;
   opacity: 0.8;
   color: #ffffff;
+}
+
+.paginates {
+  position: relative;
+}
+
+.prev {
+  position: absolute;
+  left: 270px;
+}
+
+.next {
+  position: absolute;
+  right: 270px;
 }
 
 

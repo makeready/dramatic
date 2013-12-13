@@ -17,8 +17,8 @@
       .tweet_card_text= tweet['text'].html_safe
 
 .paginates
-  = link_to_previous_page @user_feed, 'Prev', class: "paginate_button", remote: true
-  = link_to_next_page @user_feed, 'Next', class: "paginate_button", remote: true
+  = link_to_previous_page @user_feed, 'Prev', class: "paginate_button prev", remote: true
+  = link_to_next_page @user_feed, 'Next', class: "paginate_button next", remote: true
 
 :javascript
   // tweet card hover

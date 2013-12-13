@@ -32,3 +32,34 @@
       %a.twitter_button_link{href: "/auth/twitter"}
         .sign_in_button.center
           .twitter_button_text Sign in with Twitter
+          :javascript
+            $(document).ready(function () {
+
+              change();
+
+              function change() {
+                $('body').animate({
+                  backgroundColor: "#8b412b"
+                }, 20000);
+                $('body').animate({
+                  backgroundColor: "#952a91"
+                }, 20000);
+                $('body').animate({
+                  backgroundColor: "#34278b"
+                }, 20000);
+                $('body').animate({
+                  backgroundColor: "#288b3e"
+                }, 20000);
+
+                change();
+              }
+
+            });
+
+           
+
+
+
+
+
+
