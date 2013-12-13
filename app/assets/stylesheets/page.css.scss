@@ -38,25 +38,17 @@
 }
 
 .footer {
-  color: darken($bg-color, 15%);
   position: fixed;
   bottom: 0;
   padding-left: 15px;
   padding-bottom: 10px;
   padding-top: 10px;
-  background-color: darken($bg-color, 5%);
   width: 100%;
   height: $footer-height;
   line-height: $footer-height;
   font-size: 18px;
   a {
     text-decoration: none;
-  }
-  :link, :visited {
-    color: darken($bg-color, 15%);
-  }
-  :hover {
-    color: lighten($bg-color, 5%);
   }
 }
 

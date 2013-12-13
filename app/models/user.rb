@@ -16,9 +16,13 @@ class User < ActiveRecord::Base
     end
   end
 
-  def ave_color
+  def ave_color(darken=0)
     img =  Magick::Image.read(bgpic).first
     pix = img.scale(1, 1)
+    if darken != 0
+      percent = (100 - darken) / 100.0
+      pix = pix.modulate(percent)
+    end
     pixel = pix.pixel_color(0,0)
     r = pixel.red / 257
     g = pixel.green / 257

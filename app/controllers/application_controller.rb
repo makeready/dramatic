@@ -11,7 +11,6 @@ class ApplicationController < ActionController::Base
     if current_user
       array = current_user.feed
       @user_feed = Kaminari.paginate_array(array).page(params[:page]).per(3)
-      @bg_color = current_user.ave_color
     end
     respond_to do |format|
       format.html {}
@@ -19,8 +18,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def ave_color
-    current_user.ave_color
+  def ave_color(darkness=0)
+    if current_user
+      current_user.ave_color(darkness)
+    else
+      'rgb(22, 208, 97)'
+    end
   end
 
   def create
