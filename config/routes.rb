@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 Dramatic::Application.routes.draw do
 
-  root 'application#index'
+  root 'pages#index'
   get "/auth/:provider/callback" => "sessions#create"
   get "/signout" => "sessions#destroy", :as => :signout
   resources :tweets

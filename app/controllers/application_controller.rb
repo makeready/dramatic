@@ -4,46 +4,11 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   helper_method :current_user
-  helper_method :ave_color
-  
-  def index
-    @tweet = Tweet.new
-    if current_user
-      array = current_user.feed
-      @user_feed = Kaminari.paginate_array(array).page(params[:page]).per(3)
-    end
-    respond_to do |format|
-      format.html {}
-      format.js {}
-    end
-  end
 
-  def ave_color(darkness=0)
-    if current_user
-      current_user.ave_color(darkness)
-    else
-      'rgb(22, 208, 97)'
-    end
-  end
-
-  def create
-    @tweet = Tweet.new(tweet_params)
-    @tweet.user_id= current_user.id
-    @tweet.find_poster_id
-    if @tweet.save
-      redirect_to tweet_path(@tweet)
-    else
-      render :new
-    end
-  end
 
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
   
-  private
 
-  def tweet_params
-    params.require(:tweet).permit(:url, :user_id, :poster_id)
-  end
 end
