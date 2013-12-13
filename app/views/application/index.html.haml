@@ -1,32 +1,34 @@
-%h1 Context
+#wrapper
 
-- unless current_user
-  %p.intro_text.center Find contextually related tweets in your network by inputting a link.
+  %h1 Context
 
-.center
-  - if current_user 
+  - unless current_user
+    %p.intro_text.center Find contextually related tweets in your network by inputting a link.
 
-    .logged_in_section{style: "background-image:url('#{current_user.bgpic}')"} 
-      .profile_card
-        .profile_top
-          =image_tag current_user.picture, class: "profile_img"
-          .profile_text
-            =current_user.name
+  .center
+    - if current_user 
 
-        %hr
+      .logged_in_section{style: "background-image:url('#{current_user.bgpic}')"} 
+        .profile_card
+          .profile_top
+            =image_tag current_user.picture, class: "profile_img"
+            .profile_text
+              =current_user.name
 
-        %p.grey Select a recent tweet or paste a link below to search.
+          %hr
 
-      .recent_tweets
-        %h2.recent_tweets_header Recent Tweets
-        .tweet_container= render partial: 'tweets'
+          %p.grey Select a recent tweet or paste a link below to search.
 
-    .center
-      = form_for @tweet do |t|
-        = t.text_field :url, class: "biginput show_twitter_icon"
-        = t.submit "Contextualize", class: "submit_button"
+        .recent_tweets
+          %h2.recent_tweets_header Recent Tweets
+          .tweet_container= render partial: 'tweets'
 
-  - else
-    %a.twitter_button_link{href: "/auth/twitter"}
-      .sign_in_button.center
-        .twitter_button_text Sign in with Twitter
+      .center
+        = form_for @tweet do |t|
+          = t.text_field :url, class: "biginput show_twitter_icon"
+          = t.submit "Contextualize", class: "submit_button"
+
+    - else
+      %a.twitter_button_link{href: "/auth/twitter"}
+        .sign_in_button.center
+          .twitter_button_text Sign in with Twitter

@@ -49,6 +49,7 @@ gem 'haml'
 gem 'omniauth-twitter'
 gem 'kaminari'
 gem 'oridomi-rails'
+gem 'rmagick'
 
 
 # Use ActiveModel has_secure_password

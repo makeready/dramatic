@@ -5,14 +5,14 @@
   <meta charset="utf-8">
   <meta name="author" content="Leopold Wicht, Greg Ward">
   <meta name="keywords" content="context, twitter, tweet, search, recursive, leopold, wicht, greg, ward, toronto, contextualize">
-  <title>Dramatic</title>
+  <title>ContextTweet</title>
   <%= favicon_link_tag 'favicon.ico' %>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => false %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => false %>
   <link href='http://fonts.googleapis.com/css?family=Karla' rel='stylesheet' type='text/css'>
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body style="background-color:<%= ave_color %>">
 
 <div id="wrapper">
   <%= yield %>

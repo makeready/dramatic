@@ -16,6 +16,16 @@ class User < ActiveRecord::Base
     end
   end
 
+  def ave_color
+    img =  Magick::Image.read(bgpic).first
+    pix = img.scale(1, 1)
+    pixel = pix.pixel_color(0,0)
+    r = pixel.red / 257
+    g = pixel.green / 257
+    b = pixel.blue / 257
+    return "rgb(#{r},#{g},#{b})"
+  end
+
   def feed
     consumer_key = OAuth::Consumer.new(ENV['TWITTER_REST_API1'],ENV['TWITTER_REST_API2'])
     access_token = OAuth::Token.new(token,secret)

@@ -4,17 +4,23 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   helper_method :current_user
+  helper_method :ave_color
   
   def index
     @tweet = Tweet.new
     if current_user
       array = current_user.feed
       @user_feed = Kaminari.paginate_array(array).page(params[:page]).per(3)
+      @bg_color = current_user.ave_color
     end
     respond_to do |format|
       format.html {}
       format.js {}
     end
+  end
+
+  def ave_color
+    current_user.ave_color
   end
 
   def create

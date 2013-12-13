@@ -5,7 +5,7 @@
       .twitter_card_img_section
         = image_tag tweet['user']['profile_image_url'], class: "tweet_card_img"
         = link_to (image_tag 'rt_blue.png'), "http://twitter.com/" + tweet['user']['screen_name'] + "/status/" + tweet['id_str'], class: "blue_twitter_link", target: "_blank"
-      .grey.tweet_card_header= tweet['user']['screen_name'] + " " + "RETWEET"
+      .grey.tweet_card_header= tweet['user']['screen_name'] + " " + "(RT)"
       .tweet_card_text= tweet['text'].html_safe
 
   - else
