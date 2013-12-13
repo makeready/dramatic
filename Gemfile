@@ -49,7 +49,7 @@ gem 'haml'
 gem 'omniauth-twitter'
 gem 'kaminari'
 gem 'oridomi-rails'
-gem 'rmagick'
+gem 'rmagick', :require => 'RMagick'
 
 
 # Use ActiveModel has_secure_password

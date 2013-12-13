@@ -12,3 +12,7 @@ We should cache user.feed on login and give the user a button to manually refres
 Disable submit once algorithm is running
 
 Thread populate list
+
+make oauth an ajax call so that bgcolor can fade from default to user ave_color
+
+make sure site looks ok if bgpic is lightcolored
