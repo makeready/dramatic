@@ -21,7 +21,8 @@
 
         .recent_tweets
           %h2.recent_tweets_header Recent Tweets
-          .tweet_container= render partial: 'tweets'
+          - if @user_feed != []
+            .tweet_container= render partial: 'tweets'
 
       .center
         = form_for @tweet do |t|

@@ -11,3 +11,9 @@ make oauth an ajax call so that bgcolor can fade from default to user ave_color
 make sure site looks ok if bgpic is lightcolored
 
 footer-colored border around user.feed box
+
+make sure compare only looks at whole words
+
+***need to handle API user overlimits
+
+add "was this useful?" statistic tracking at the end

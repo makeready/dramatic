@@ -5,7 +5,8 @@ class PagesController < ApplicationController
     if current_user
       array = current_user.feed
       if array['errors'].length > 0
-        raise ActionController::RoutingError.new('Twitter SUCKS')
+        @user_feed = []
+        #raise ActionController::RoutingError.new('Twitter SUCKS')
       else
         @user_feed = Kaminari.paginate_array(array).page(params[:page]).per(3)
       end
