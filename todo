@@ -1,8 +1,3 @@
-Example tweets that need to work:
-
-https://twitter.com/fazlalizadeh/status/410088541100584960
-
-Set up pagination button on userfeed to dynamically make api calls
 
 Todo:
   - If user already logged in then logged out, check for 'one click login', else option to log in as diff user
@@ -11,8 +6,8 @@ We should cache user.feed on login and give the user a button to manually refres
 
 Disable submit once algorithm is running
 
-Thread populate list
-
 make oauth an ajax call so that bgcolor can fade from default to user ave_color
 
 make sure site looks ok if bgpic is lightcolored
+
+footer-colored border around user.feed box

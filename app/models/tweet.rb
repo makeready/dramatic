@@ -1,23 +1,13 @@
 # -*- encoding : utf-8 -*-
 class Tweet < ActiveRecord::Base
 
-  has_many :context_tweets, class_name: "Tweet", foreign_key: 'inspired_id'
-  belongs_to :inspired_tweet, class_name: "Tweet"
   belongs_to :user
-  #enables tweet.context_tweets and tweet.inspired_tweet
-  #
-  #  CONTEXT_TWEET CONTEXT_TWEET
-  #  \_________________________/
-  #              |
-  #        INSPIRED_TWEET
 
   def api_call(path,query,verb)
    
     consumer_key = OAuth::Consumer.new(ENV['TWITTER_REST_API1'],ENV['TWITTER_REST_API2'])
 
-    access_token = OAuth::Token.new(
-      self.user.token,
-      self.user.secret)
+    access_token = OAuth::Token.new(self.user.token,self.user.secret)
     encoded_query = URI.encode_www_form(query)
     baseurl = "https://api.twitter.com"
     address = URI("#{baseurl}#{path}?#{encoded_query}")
