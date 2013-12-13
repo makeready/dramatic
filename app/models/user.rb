@@ -14,7 +14,6 @@ class User < ActiveRecord::Base
       user.twitter_id       = auth['extra']['raw_info']['id_str']
       user.bgpic            = auth['extra']['raw_info']['profile_background_image_url']
     end
-    self.feedstring = user.feed.to_s
   end
 
   def ave_color(darken=0)
