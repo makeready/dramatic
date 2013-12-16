@@ -11,7 +11,7 @@ class TweetsController < ApplicationController
     if @tweet.save
       respond_to do |format|
         format.html {head :ok}
-        format.json {render json: @tweet.generate_context(1000,2)}
+        format.json {render json: (@tweet.load_tweet_json + @tweet.generate_context(1000,2))}
       end
     else
       render :new
