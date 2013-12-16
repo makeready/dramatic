@@ -9,9 +9,9 @@ class TweetsController < ApplicationController
     @tweet.user_id = current_user.id
     @tweet.find_poster_id
     if @tweet.save
+      original_tweet = [@tweet.load_tweet_json]
       found_tweets =  @tweet.generate_context(1000,2)
-      original_tweet = @tweet.load_tweet_json
-      combined_tweets = found_tweets.insert(0,original_tweet)
+      combined_tweets =  original_tweet + found_tweets
       respond_to do |format|
         format.html {head :ok}
         format.json {render json: combined_tweets}
