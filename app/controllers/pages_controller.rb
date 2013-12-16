@@ -3,12 +3,12 @@ class PagesController < ApplicationController
   def index
     @tweet = Tweet.new
     if current_user
-      array = current_user.feed
-      if array[0]['errors']
+      feed = current_user.feed
+      if feed.is_a? Hash #meaning that we have an error instead of an array of tweets
         @user_feed = []
         #raise ActionController::RoutingError.new('Twitter SUCKS')
       else
-        @user_feed = Kaminari.paginate_array(array).page(params[:page]).per(3)
+        @user_feed = Kaminari.paginate_array(feed).page(params[:page]).per(3)
       end
     end
     respond_to do |format|
