@@ -9,7 +9,7 @@ class TweetsController < ApplicationController
     @tweet.user_id = current_user.id
     @tweet.find_poster_id
     if @tweet.save
-      head :ok
+      render json: @tweet
     else
       render :new
     end
