@@ -43,7 +43,7 @@ $(document).ready(function () {
     $.ajax({
       method: 'POST',
       dataType: 'json',
-      data: {url: url},
+      data: {tweet: {url: url}},
       url: '/tweets',
       beforeSend: function () {
         NProgress.start();
