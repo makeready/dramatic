@@ -16,6 +16,6 @@
 //= require jquery.animate-colors-min
 //= require flowtype
 //= require oridomi
-//= require nprogress-ajax
+//= require nprogress
 //= require index
 //= require_tree .

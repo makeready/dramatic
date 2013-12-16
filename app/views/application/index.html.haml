@@ -29,6 +29,8 @@
           = t.text_field :url, class: "biginput show_twitter_icon"
           = t.submit "Contextualize", class: "submit_button"
 
+      .center#results
+
     - else
       %a.twitter_button_link{href: "/auth/twitter"}
         .sign_in_button.center

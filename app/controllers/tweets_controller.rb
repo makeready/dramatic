@@ -6,10 +6,10 @@ class TweetsController < ApplicationController
 
   def create
     @tweet = Tweet.new(tweet_params)
-    @tweet.user_id= current_user.id
+    @tweet.user_id = current_user.id
     @tweet.find_poster_id
     if @tweet.save
-      redirect_to tweet_path(@tweet)
+      head :ok
     else
       render :new
     end

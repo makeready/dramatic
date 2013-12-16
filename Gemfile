@@ -50,7 +50,7 @@ gem 'omniauth-twitter'
 gem 'kaminari'
 gem 'oridomi-rails'
 gem 'rmagick', :require => 'RMagick'
-gem 'nprogress-rails'
+
 
 
 # Use ActiveModel has_secure_password
