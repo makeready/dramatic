@@ -54,6 +54,7 @@ $(document).ready(function () {
         });
       },
       complete: function () {
+        console.log("AJAX complete");
         NProgress.done();
         $('.submit_button').fadeOut(2000);
       }
@@ -68,3 +69,8 @@ $(document).ready(function () {
 
 
 });
+
+
+
+
+
