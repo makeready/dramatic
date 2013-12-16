@@ -9,7 +9,10 @@ class TweetsController < ApplicationController
     @tweet.user_id = current_user.id
     @tweet.find_poster_id
     if @tweet.save
-      render json: @tweet
+      respond_to do |format|
+        format.html {head :ok}
+        format.json {render json: @tweet.generate_context(1000,2)}
+      end
     else
       render :new
     end
