@@ -4,7 +4,7 @@ class PagesController < ApplicationController
     @tweet = Tweet.new
     if current_user
       array = current_user.feed
-      if array['errors'].length > 0
+      if array[0]['errors']
         @user_feed = []
         #raise ActionController::RoutingError.new('Twitter SUCKS')
       else
