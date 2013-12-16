@@ -39,7 +39,7 @@
   right: 15px;
 }*/
 
-#nprogress .spinner-icon {
+/*#nprogress .spinner-icon {
   width: 18px;
   height: 18px;
   box-sizing: border-box;
@@ -60,5 +60,5 @@
 @keyframes nprogress-spinner {
   0%   { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
-}
+}*/
 

@@ -11,10 +11,10 @@ class TweetsController < ApplicationController
     if @tweet.save
       original_tweet = [@tweet.load_tweet_json]
       found_tweets =  @tweet.generate_context(1000,2)
-      combined_tweets =  original_tweet + found_tweets
+      combined_tweets = original_tweet + found_tweets
       respond_to do |format|
         format.html {head :ok}
-        format.json {render json: combined_tweets}
+        format.json { render json: combined_tweets }
       end
     else
       render :new

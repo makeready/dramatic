@@ -153,4 +153,8 @@ class Tweet < ActiveRecord::Base
     return match_score.sort_by{|k,v| v}.reverse.take(numtweets)
     # RETURNS [[tweet,score],[tweet,score]]
   end
+
+  def to_json
+    {url: self.url, body: self.body}
+  end
 end
