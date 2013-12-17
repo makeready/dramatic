@@ -32,8 +32,8 @@ class Tweet < ActiveRecord::Base
 
   def find_keywords(text = "")
     output = []
-    input = load_tweet_json["text"] if text == ""
-    input.split.each do |word|
+    text = load_tweet_json["text"] if text == ""
+    text.split.each do |word|
       clean_word = strip_punctuation(word)
       output << clean_word unless Dictionary.found?(clean_word)
     end

@@ -11,7 +11,7 @@ class TweetsController < ApplicationController
     if @tweet.save
       original_tweet = [@tweet.load_tweet_json]
       found_tweets =  @tweet.generate_context(1000,2)
-      keywords = @tweet.find_keywords(original_tweet["text"])
+      keywords = @tweet.find_keywords(original_tweet[0]["text"])
       data = []
       data[0] = original_tweet
       data[1] = found_tweets
