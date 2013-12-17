@@ -1,6 +1,6 @@
 #wrapper
 
-  %h1 Context
+  =link_to "<h1>Context</h1>".html_safe, root_path, id: "header"
 
   - unless current_user
     %p.intro_text.center Find contextually related tweets in your network by inputting a link.
@@ -29,9 +29,7 @@
           = t.text_field :url, class: "biginput show_twitter_icon"
           = t.submit "Contextualize", class: "submit_button"
 
-      .orig{style: "display:none"}
-
-      .center#results
+      .center#results{style: "display:none"}
       
 
     - else

@@ -63,21 +63,24 @@ function set_ajax() {
       beforeSend: function () {
         NProgress.start();
         $('.submit_button').val('Contacting Twitter, please wait...').animate({backgroundColor: '#ff6626'});
-          var fold = new OriDomi('.logged_in_section',{speed: 3000});
-          fold.foldUp(function () {
-            $('.logged_in_section').slideUp();
-        });
+          if ( $('.logged_in_section').length > 0 ) {
+            var fold = new OriDomi('.logged_in_section',{speed: 3000});
+            fold.foldUp(function () {
+              $('.logged_in_section').slideUp();
+            });
+          }
       },
 
       complete: function () {
-        console.log("AJAX complete");
+        $('#results').removeAttr('id');
         NProgress.done();
       }
 
     }).done(function(data){
       console.log("AJAX success");
+      console.log(data);
       $('.submit_button').fadeOut(1000);
-      $('.biginput').fadeOut(1000);
+      $('.biginput').fadeOut(500);
       render_view(data);
     }).fail(function () {
       console.log("AJAX failed");
@@ -88,12 +91,12 @@ function set_ajax() {
 
 // for data object [0] = orig tweet, [1] = array of returned tweets, [2] = array of matched keywords
 function render_view(data){
-  var origTweet = "<h3>" + data[0]['user']['name'] + "</h3><p>" + data[0]['text'] + "</p>";
-  $('.orig').append(origTweet);
-  $('.orig').fadeIn();
+  var origTweet = "<div class='orig'><h3>" + data[0]['user']['name'] + "</h3><p>" + data[0]['text'] + "</p></div>";
+  $('#results').append(origTweet);
+  $('#results').fadeIn(2000);
   switch (data[1].length) {
   case 0:
-    $('#results').append("No relevant tweets, please try another");
+    $('#results').append("<br>No relevant tweets, please try another");
     break;
   case 1:
     make_tweet(data[1][0],'center', data[2]);
@@ -103,7 +106,7 @@ function render_view(data){
     make_tweet(data[1][0],'right', data[2]);
     break;
   default:
-    $('#results').append("Data Error, please try again");
+    $('#results').append("<br>Data Error, please try again");
     break;
   }
   add_recursive_elements();
@@ -112,15 +115,22 @@ function render_view(data){
 
 //creates tweet card replay
 function make_tweet(data, place, words) {
-  var answerCard = "<div class='answercard empty " + place + "'><div class='answer_img_section'></div><div class='answer_title_section'></div><div class='answer_text_section'></div></div>";
+  var answerCard = "<div class='answercard empty " + place + "' data-user='" + data[0]['user']['screen_name'] + "' data-id='" + data[0]['id_str'] + "'><div class='answer_img_section'></div><div class='answer_title_section'></div><div class='answer_text_section'></div></div>";
   var title = "@" + data[0]['user']['screen_name'] + " <span class='highlight'>(" + data[1] + ")</span>";
   var text = data[0]['text'];
   var textArray = text.toLowerCase().split(" ");
   text = match_keywords(textArray, words);
   var img = "<img class='tweet_card_img' src='" + data[0]['user']['profile_image_url'] + "'>";
+  var bluepath = '';
+  if ( data[0]['retweeted_status'] === undefined ) {
+    bluepath = "/assets/twitter_blue.png";
+  } else {
+    bluepath = "/assets/rt_blue.png";
+  }
+  var twit_img = "<a class='blue_twitter_link' href='http://twitter.com/" + data[0]['user']['screen_name'] + "/status/" + data[0]['id_str'] + "' target='_blank' style='visibility:hidden;'><img src='" + bluepath + "'></a>";
   $('#results').append(answerCard);
   var target = $('.answercard.empty');
-  target.find('.answer_img_section').append(img);
+  target.find('.answer_img_section').append(img).append(twit_img);
   target.find('.answer_title_section').append(title);
   target.find('.answer_text_section').append(text);
   $('.empty').removeClass('empty');
@@ -146,11 +156,17 @@ function add_recursive_elements() {
   $('.biginput').remove();
   $('.logged_in_section').remove();
   $('.submit_button').remove();
-  var array = $('.answercard');
-  var element = array[array.length - 1];
+  var array = $('#results').find('.answercard');
+  var element;
+  if ( array.length > 0 ) {
+    element = array[array.length - 1];
+  } else {
+    element = $('#results').find('.orig');
+  }
   var button = "<input class='submit_button' type='submit' value='Contextualize' style='display:none'>";
   var search = "<input class='biginput show_twitter_icon' type='text'>";
-  $(element).after(button).after(search);
+  var results = "<div id='results' class='center'></div>";
+  $(element).after(results).after(button).after(search);
 }
 
 // bind mouseover and onclick events to new objects
@@ -170,12 +186,27 @@ function bind_events() {
   });
 
   // tweet card paste to box
-  $('.answer').on('click', function (){
+  $('.answercard').on('click', function (){
     var id = $(this).data('id');
     var user = $(this).data('user');
     $('.biginput').val('http://twitter.com/' + user + '/status/' + id);
     $('.biginput').keyup();
   });
+
+  // fade in new submit button
+  var submitted = false;
+  $('.biginput').keyup(function() {
+   if($(this).val() !== '') {
+    if (submitted === false) {
+      $('.submit_button').fadeIn();
+        }
+  } else {
+    $('.submit_button').fadeOut();
+  }
+  });
+
+  //add ajax functionality
+  set_ajax();
 }
 
 

@@ -218,7 +218,7 @@ a.paginate_button:hover {
   color: #000000;
   font-size: 20px;
   text-decoration: none;
-  cursor: poiner;
+  cursor: pointer;
   border: 0;
   display: none;
 }
@@ -250,6 +250,8 @@ input.submit_button:focus {
   background-color: rgba(255,255,255,0.8);
   margin: 20px 0;
   color: $dark-grey-color;
+  cursor: pointer;
+  min-height: 80px;
   .answer_img_section {
     position: absolute;
     left: 5px;
