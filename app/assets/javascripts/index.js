@@ -28,9 +28,13 @@ $(document).ready(function () {
   });
 
   // enable submit button on input
+  var submitted = false;
+
   $('.biginput').keyup(function() {
    if($(this).val() !== '') {
-    $('.submit_button').fadeIn();
+    if (submitted === false) {
+      $('.submit_button').fadeIn();
+        };
   } else {
     $('.submit_button').fadeOut();
   }
@@ -39,6 +43,7 @@ $(document).ready(function () {
   // AJAX
   $('.submit_button').on('click', function (event) {
     event.preventDefault();
+    submitted = true;
     url = $('.biginput').val();
 
     $.ajax({
@@ -73,9 +78,9 @@ $(document).ready(function () {
 
   // for data object [0] = orig tweet, [1] = array of returned tweets, [2] = array of matched keywords
   function render_view(data){
-    var origTweet = "<h3>" + data[0]['user']['name'] + "</h3><p>" + data[0]['text'] + "</p>";
-    $('.orig').append(origTweet);
-    $('.orig').fadeIn();
+    // var origTweet = "<h3>" + data[0]['user']['name'] + "</h3><p>" + data[0]['text'] + "</p>";
+    // $('.orig').append(origTweet);
+    // $('.orig').fadeIn();
     console.log(data);
     // switch (data.length) {
     // case 0:
