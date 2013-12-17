@@ -28,9 +28,13 @@ $(document).ready(function () {
   });
 
   // enable submit button on input
+  var submitted = false;
+
   $('.biginput').keyup(function() {
    if($(this).val() !== '') {
-    $('.submit_button').fadeIn();
+    if (submitted === false) {
+      $('.submit_button').fadeIn();
+        };
   } else {
     $('.submit_button').fadeOut();
   }
@@ -39,6 +43,7 @@ $(document).ready(function () {
   // AJAX
   $('.submit_button').on('click', function (event) {
     event.preventDefault();
+    submitted = true;
     url = $('.biginput').val();
 
     $.ajax({
