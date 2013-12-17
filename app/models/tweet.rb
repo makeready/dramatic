@@ -41,7 +41,7 @@ class Tweet < ActiveRecord::Base
   end
 
   def strip_punctuation(word)
-    word.gsub(/[^[:alnum:]]/, "").downcase
+    word.gsub(/[^[\s]|^[:alnum:]]/, "").downcase
   end
 
   def tweet_id
@@ -127,18 +127,23 @@ class Tweet < ActiveRecord::Base
     match_score = Hash.new(0)
     list_id = create_new_list(find_followings)
     keywords = find_keywords
-    parse_list(list_id,listsize).each do |tweet|
-      puts tweet["text"]
-      clean_tweet = strip_punctuation(tweet["text"])
-      keywords.each do |keyword|
-        if clean_tweet.include?(keyword)
-          match_score[tweet] += 1 
-          puts "Added 1 to match score, #{clean_tweet} included #{keyword}."
-          puts "New match score is #{match_score[tweet]}."
+    parsed_list = parse_list(list_id,listsize)
+    if parsed_list != []
+      parsed_list.each do |tweet|
+        #puts tweet["text"]
+        clean_tweet = find_keywords(tweet["text"])
+        keywords.each do |keyword|
+          clean_tweet.each do |clean_tweet_keyword|
+            if clean_tweet_keyword == keyword
+              match_score[tweet] += 1 
+              puts "Added 1 to match score, #{clean_tweet} included #{keyword}."
+              puts "New match score is #{match_score[tweet]}."
+            end
+          end
         end
       end
     end
-    match_score.each {|key, value| puts "#{key} is #{value}" }
+    #match_score.each {|key, value| puts "#{key["text"]} is #{value}" }
     delete_list(list_id)
     return match_score.sort_by{|k,v| v}.reverse.take(numtweets)
     # RETURNS [[tweet,score],[tweet,score]]
