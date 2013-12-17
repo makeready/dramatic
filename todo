@@ -17,3 +17,5 @@ make sure compare only looks at whole words
 ***need to handle API user overlimits
 
 add "was this useful?" statistic tracking at the end
+
+make sure "Ford's" scans as Ford etc

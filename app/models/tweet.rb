@@ -41,6 +41,7 @@ class Tweet < ActiveRecord::Base
   end
 
   def strip_punctuation(word)
+    word = word.gsub(/'s/, "")
     word.gsub(/[^[\s]|^[:alnum:]]/, "").downcase
   end
 
