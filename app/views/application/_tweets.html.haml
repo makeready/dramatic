@@ -5,7 +5,7 @@
       .twitter_card_img_section
         = image_tag tweet['user']['profile_image_url'], class: "tweet_card_img"
         = link_to (image_tag 'rt_blue.png'), "http://twitter.com/" + tweet['user']['screen_name'] + "/status/" + tweet['id_str'], class: "blue_twitter_link", target: "_blank"
-      .grey.tweet_card_header= tweet['user']['screen_name'] + " " + "(RT)"
+      .grey.tweet_card_header= "@" + tweet['user']['screen_name'] + " " + "(RT)"
       .tweet_card_text= tweet['text'].html_safe
 
   - else
@@ -13,7 +13,7 @@
       .twitter_card_img_section
         = image_tag tweet['user']['profile_image_url'], class: "tweet_card_img"
         = link_to (image_tag 'twitter_blue.png'), "http://twitter.com/" + tweet['user']['screen_name'] + "/status/" + tweet['id_str'], class: "blue_twitter_link", target: "_blank"
-      .grey.tweet_card_header= tweet['user']['screen_name']
+      .grey.tweet_card_header= "@" + tweet['user']['screen_name']
       .tweet_card_text= tweet['text'].html_safe
 
 .paginates
@@ -27,7 +27,7 @@
     $(this).css('color', '#ffffff');
     $(this).find('.tweet_card_header').css('color','#000000');
     $(this).find('.blue_twitter_link').css('visibility','visible');
-    $(this).css('opacity', 0.95)
+    $(this).css('opacity', 0.95);
   });
   $('.tweet_card').mouseleave(function () {
     $(this).css('background-color','rgba(255,255,255,0.95)');
@@ -44,4 +44,5 @@
     $('.biginput').val('http://twitter.com/' + user + '/status/' + id);
     $('.biginput').keyup();
   });
+  
 

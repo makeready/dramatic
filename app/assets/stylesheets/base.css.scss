@@ -6,6 +6,7 @@ body {
   font-weight: 100;
   overflow-y: hidden;
   margin-bottom: 30px;
+  overflow-x: hidden;
 }
 
 h1 {
@@ -36,3 +37,6 @@ hr {
   margin: 5px 0;
 }
 
+.highlight {
+  color: $sign-out-color;
+}
