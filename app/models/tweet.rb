@@ -127,8 +127,8 @@ class Tweet < ActiveRecord::Base
     match_score = Hash.new(0)
     list_id = create_new_list(find_followings)
     keywords = find_keywords
-
     parse_list(list_id,listsize).each do |tweet|
+      puts tweet["text"]
       clean_tweet = strip_punctuation(tweet["text"])
       keywords.each do |keyword|
         if clean_tweet.include?(keyword)

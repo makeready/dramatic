@@ -73,9 +73,9 @@ $(document).ready(function () {
 
   // for data object [0] = orig tweet, [1] = array of returned tweets, [2] = array of matched keywords
   function render_view(data){
-    var origTweet = "<h3>" + data[0]['user']['name'] + "</h3><p>" + data[0]['text'] + "</p>";
-    $('.orig').append(origTweet);
-    $('.orig').fadeIn();
+    // var origTweet = "<h3>" + data[0]['user']['name'] + "</h3><p>" + data[0]['text'] + "</p>";
+    // $('.orig').append(origTweet);
+    // $('.orig').fadeIn();
     console.log(data);
     // switch (data.length) {
     // case 0:
