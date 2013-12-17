@@ -49,7 +49,7 @@ $(document).ready(function () {
 
       beforeSend: function () {
         NProgress.start();
-        $('.submit_button').val('Contacting Twitter, please wait...').animate({backgroundColor: '#c4835b'});
+        $('.submit_button').val('Contacting Twitter, please wait...').animate({backgroundColor: '#ff6626'});
           var fold = new OriDomi('.logged_in_section',{speed: 3000});
           fold.foldUp(function () {
             $('.logged_in_section').slideUp();
@@ -71,25 +71,27 @@ $(document).ready(function () {
     });
   });
 
+  // for data object [0] = orig tweet, [1] = array of returned tweets, [2] = array of matched keywords
   function render_view(data){
     var origTweet = "<h3>" + data[0]['user']['name'] + "</h3><p>" + data[0]['text'] + "</p>";
     $('.orig').append(origTweet);
     $('.orig').fadeIn();
-    switch (data.length) {
-    case 1:
-      $('#results').append("No relevant tweets, please try another");
-      break;
-    case 2:
-      make_tweet(data[1]);
-      break;
-    case 3:
-      make_tweet(data[1]);
-      make_tweet(data[2]);
-      break;
-    default:
-      $('#results').append("Data Error, please try again");
-      break;
-    }
+    console.log(data);
+    // switch (data.length) {
+    // case 0:
+    //   $('#results').append("No relevant tweets, please try another");
+    //   break;
+    // case 1:
+    //   make_tweet(data[1][1]);
+    //   break;
+    // case 2:
+    //   make_tweet(data[1][2]);
+    //   make_tweet(data[1][1]);
+    //   break;
+    // default:
+    //   $('#results').append("Data Error, please try again");
+    //   break;
+    // }
   }
 
   function make_tweet(data) {

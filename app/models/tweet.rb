@@ -11,7 +11,7 @@ class Tweet < ActiveRecord::Base
     encoded_query = URI.encode_www_form(query)
     baseurl = "https://api.twitter.com"
     address = URI("#{baseurl}#{path}?#{encoded_query}")
-
+    
     http             = Net::HTTP.new address.host, address.port
     http.use_ssl     = true
     http.verify_mode = OpenSSL::SSL::VERIFY_PEER
