@@ -34,7 +34,7 @@ $(document).ready(function () {
    if($(this).val() !== '') {
     if (submitted === false) {
       $('.submit_button').fadeIn();
-        };
+        }
   } else {
     $('.submit_button').fadeOut();
   }
@@ -78,30 +78,29 @@ $(document).ready(function () {
 
   // for data object [0] = orig tweet, [1] = array of returned tweets, [2] = array of matched keywords
   function render_view(data){
-    // var origTweet = "<h3>" + data[0]['user']['name'] + "</h3><p>" + data[0]['text'] + "</p>";
-    // $('.orig').append(origTweet);
-    // $('.orig').fadeIn();
-    console.log(data);
-    // switch (data.length) {
-    // case 0:
-    //   $('#results').append("No relevant tweets, please try another");
-    //   break;
-    // case 1:
-    //   make_tweet(data[1][1]);
-    //   break;
-    // case 2:
-    //   make_tweet(data[1][2]);
-    //   make_tweet(data[1][1]);
-    //   break;
-    // default:
-    //   $('#results').append("Data Error, please try again");
-    //   break;
-    // }
+    var origTweet = "<h3>" + data[0]['user']['name'] + "</h3><p>" + data[0]['text'] + "</p>";
+    $('.orig').append(origTweet);
+    $('.orig').fadeIn();
+    switch (data[1].length) {
+    case 0:
+      $('#results').append("No relevant tweets, please try another");
+      break;
+    case 1:
+      make_tweet(data[1][0],'center');
+      break;
+    case 2:
+      make_tweet(data[1][1],'left');
+      make_tweet(data[1][0],'right');
+      break;
+    default:
+      $('#results').append("Data Error, please try again");
+      break;
+    }
   }
 
-  function make_tweet(data) {
-    var answerCard = "<div class='answercard empty'><div class='answer_img_section'></div><div class='answer_title_section'></div><div class='answer_text_section'></div></div>";
-    var title = data[0]['user']['screen_name'];
+  function make_tweet(data, place) {
+    var answerCard = "<div class='answercard empty " + place + "'><div class='answer_img_section'></div><div class='answer_title_section'></div><div class='answer_text_section'></div></div>";
+    var title = data[0]['user']['screen_name'] + "<span class='score'>(" + data[1] + ")</span>";
     var text = data[0]['text'];
     var img = "<img class='tweet_card_img' src='" + data[0]['user']['profile_image_url'] + "'>";
     $('#results').append(answerCard);

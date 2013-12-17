@@ -245,7 +245,42 @@ input.submit_button:focus {
   }
 }
 
+.answercard {
+  position: relative;
+  background-color: rgba(255,255,255,0.8);
+  margin: 20px 0;
+  color: $dark-grey-color;
+  .answer_img_section {
+    position: absolute;
+    left: 5px;
+    top: 5px;
+  }
+  .answer_title_section {
+    color: $grey-color;
+    background-color: rgba(0,0,0,0.1);
+  }
+  .answer_text_section {
+    margin-left: 60px;
+    padding: 8px;
+  }
+}
 
+.score {
+  color: $sign-out-color;
+}
+
+.answercard.center {
+  width: 100%
+}
+.answercard.right {
+  width: 450px;
+  float: right;
+}
+.answercard.left {
+  width: 450px;
+  float: left;
+  margin-right: 40px;
+}
 
 
 
