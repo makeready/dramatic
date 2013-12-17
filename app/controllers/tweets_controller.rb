@@ -11,10 +11,14 @@ class TweetsController < ApplicationController
     if @tweet.save
       original_tweet = [@tweet.load_tweet_json]
       found_tweets =  @tweet.generate_context(1000,2)
-      combined_tweets = original_tweet + found_tweets
+      keywords = @tweet.find_keywords(original_tweet["text"])
+      data = []
+      data[0] = original_tweet
+      data[1] = found_tweets
+      data[2] = keywords
       respond_to do |format|
         format.html {head :ok}
-        format.json { render json: combined_tweets }
+        format.json { render json: data }
       end
     else
       render :new
@@ -27,3 +31,6 @@ class TweetsController < ApplicationController
     params.require(:tweet).permit(:url, :user_id, :poster_id)
   end
 end
+
+
+#[original tweet,[[foundtweet1, score 1],[foundtweet2,score2]],[keywords]]

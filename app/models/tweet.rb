@@ -30,9 +30,10 @@ class Tweet < ActiveRecord::Base
 
   end
 
-  def find_keywords
+  def find_keywords(text = "")
     output = []
-    load_tweet_json["text"].split.each do |word|
+    input = load_tweet_json["text"] if text == ""
+    input.split.each do |word|
       clean_word = strip_punctuation(word)
       output << clean_word unless Dictionary.found?(clean_word)
     end
@@ -90,18 +91,7 @@ class Tweet < ActiveRecord::Base
     numcalls = 13 if numcalls > 13
     numcalls.times do |call|
       threads << Thread.new do 
-        puts "***********************************"
-        puts "***********************************"
-        puts "***********************************"
-        puts "***********************************"
-        puts "CALL NUMBER #{call+1} OF #{numcalls}. FOLLOWINGS.LENGTH = #{followings.length}"
-        puts "#{(call)*divisor}..#{((call+1)*divisor)-1}"
-        puts "***********************************"
-        puts "***********************************"
-        puts "***********************************"
-        puts "***********************************"
         users = followings[(call)*divisor..((call+1)*divisor)-1].join(',')
-        puts users
         api_call("/1.1/lists/members/create_all.json",[["list_id", list_id],["user_id",users]],"POST")
       end
     end
@@ -143,8 +133,8 @@ class Tweet < ActiveRecord::Base
       keywords.each do |keyword|
         if clean_tweet.include?(keyword)
           match_score[tweet] += 1 
-          # puts "Added 1 to match score, #{clean_tweet} included #{keyword}."
-          # puts "New match score is #{match_score[tweet]}."
+          puts "Added 1 to match score, #{clean_tweet} included #{keyword}."
+          puts "New match score is #{match_score[tweet]}."
         end
       end
     end
