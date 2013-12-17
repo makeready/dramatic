@@ -10,7 +10,7 @@ class TweetsController < ApplicationController
     @tweet.find_poster_id
     if @tweet.save
       original_tweet = @tweet.load_tweet_json
-      found_tweets =  @tweet.generate_context(1000,2)
+      found_tweets =  @tweet.generate_context(2,1000)
       keywords = @tweet.find_keywords(original_tweet["text"])
       data = []
       data[0] = original_tweet
