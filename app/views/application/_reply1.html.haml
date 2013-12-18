@@ -14,7 +14,8 @@
           = image_tag @data[1][0][0]['user']['profile_image_url'], class: "tweet_card_img"
           = link_to (image_tag 'rt_blue.png'), "http://twitter.com/" + @data[1][0][0]['user']['screen_name'] + "/status/" + @data[1][0][0]['id_str'], class: "blue_twitter_link", target: "_blank"
         .answer_title_section
-          = "@" + @data[1][0][0]['user']['screen_name'] + " " + "(RT)"
+          = "@" + @data[1][0][0]['user']['screen_name'] + " (RT) " 
+          %span{class: 'highlight'}= "(" + @data[1][0][1].to_s + ")"
         .answer_text_section
           =  @data[1][0][0]['text'].html_safe
     - else
@@ -23,7 +24,8 @@
           = image_tag @data[1][0][0]['user']['profile_image_url'], class: "tweet_card_img"
           = link_to (image_tag 'twitter_blue.png'), "http://twitter.com/" + @data[1][0][0]['user']['screen_name'] + "/status/" + @data[1][0][0]['id_str'], class: "blue_twitter_link", target: "_blank"
         .answer_title_section
-          = "@" + @data[1][0][0]['user']['screen_name'] + " " + "(RT)"
+          = "@" + @data[1][0][0]['user']['screen_name']
+          %span{class: 'highlight'}= "(" + @data[1][0][1].to_s + ")"
         .answer_text_section
           =  @data[1][0][0]['text'].html_safe
 
