@@ -1,0 +1,25 @@
+.reply
+
+  .orig
+
+  .answercards
+
+    .answercard.left
+      .answer_img_section
+      .answer_title_section
+      .answer_text_section
+
+    .answercard.right
+      .answer_img_section
+      .answer_title_section
+      .answer_text_section
+
+  .center
+    = form_for @tweet do |t|
+      = t.text_field :url, class: "biginput show_twitter_icon"
+      = t.submit "Contextualize", class: "submit_button"
+
+tweet - text / screen name / tweet string / 
+retweet? : rt_blue.png : twitter_blue.png
+match keywords (ruby)
+

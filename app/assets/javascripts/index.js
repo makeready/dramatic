@@ -113,28 +113,7 @@ function render_view(data){
   bind_events();
 }
 
-//creates tweet card replay
-function make_tweet(data, place, words) {
-  var answerCard = "<div class='answercard empty " + place + "' data-user='" + data[0]['user']['screen_name'] + "' data-id='" + data[0]['id_str'] + "'><div class='answer_img_section'></div><div class='answer_title_section'></div><div class='answer_text_section'></div></div>";
-  var title = "@" + data[0]['user']['screen_name'] + " <span class='highlight'>(" + data[1] + ")</span>";
-  var text = data[0]['text'];
-  var textArray = text.toLowerCase().split(" ");
-  text = match_keywords(textArray, words);
-  var img = "<img class='tweet_card_img' src='" + data[0]['user']['profile_image_url'] + "'>";
-  var bluepath = '';
-  if ( data[0]['retweeted_status'] === undefined ) {
-    bluepath = "/assets/twitter_blue.png";
-  } else {
-    bluepath = "/assets/rt_blue.png";
-  }
-  var twit_img = "<a class='blue_twitter_link' href='http://twitter.com/" + data[0]['user']['screen_name'] + "/status/" + data[0]['id_str'] + "' target='_blank' style='visibility:hidden;'><img src='" + bluepath + "'></a>";
-  $('#results').append(answerCard);
-  var target = $('.answercard.empty');
-  target.find('.answer_img_section').append(img).append(twit_img);
-  target.find('.answer_title_section').append(title);
-  target.find('.answer_text_section').append(text);
-  $('.empty').removeClass('empty');
-}
+
 
 // adds highlight span to matching words
 function match_keywords(textArray, words) {
@@ -151,24 +130,6 @@ function match_keywords(textArray, words) {
   return returnArray.join(" ");
 }
 
-// adds new search box and button for recursive searching while removing old elements
-function add_recursive_elements() {
-  $('.biginput').remove();
-  $('.logged_in_section').remove();
-  $('.submit_button').remove();
-  var array = $('#results').find('.answercard');
-  var element;
-  if ( array.length > 0 ) {
-    element = array[array.length - 1];
-  } else {
-    element = $('#results').find('.orig');
-  }
-  $('#results').removeAttr('id');
-  var button = "<input class='submit_button' type='submit' value='Contextualize' style='display:none'>";
-  var search = "<input class='biginput show_twitter_icon' type='text'>";
-  var results = "<div id='results' class='center'></div>";
-  $(element).after(button).after(search).after(results);
-}
 
 // bind mouseover and onclick events to new objects
 function bind_events() {
