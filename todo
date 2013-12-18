@@ -4,7 +4,11 @@ make oauth an ajax call so that bgcolor can fade from default to user ave_color
 
 footer-colored border around user.feed box
 
+<<<<<<< HEAD
 ***need to tell the user something if user.feed is blank
+=======
+***need to handle API user overlimits
+>>>>>>> refactored to eliminate redundant api calls and skinnify controller
 
 add "was this useful?" statistic tracking at the end
 
@@ -12,8 +16,12 @@ Cache dictionary
 
 stop fake loading bar if javascript has halted
 
+<<<<<<< HEAD
 debug tiebreak
 
 tweet with a link should win a tiebreak
+=======
+implement match_score tiebreakers
+>>>>>>> refactored to eliminate redundant api calls and skinnify controller
 
 clicking on result RTs does not append the original tweet link

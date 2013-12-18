@@ -151,8 +151,6 @@ class Tweet < ActiveRecord::Base
   end
 
   def generate_context(numtweets,listsize)
-
-
     tweet_json = load_tweet_json
 
     return tweet_json["in_reply_to_status_id_str"] if tweet_json["in_reply_to_status_id_str"]
