@@ -1,1 +1,18 @@
-.
+.reply
+
+  .orig
+    %h3
+      = @data[0]['user']['name']
+    %p
+      = @data[0]['text']
+
+  .answercards
+    %p No relevant tweets found, please try another
+       
+  .center
+    = form_for @tweet, remote: true do |t|
+      = t.text_field :url, class: "biginput show_twitter_icon"
+      = t.submit "Contextualize", class: "submit_button"
+
+:javascript
+  bind_events();

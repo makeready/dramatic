@@ -50,19 +50,19 @@ $(document).ready(function () {
 // hooks AJAX loop onto submit button
 function set_ajax() {
   $('.submit_button').on('click', function (event) {
-    event.preventDefault();
+    // event.preventDefault();
     submitted = true;
     url = $('.biginput').val();
 
     $.ajax({
       method: 'POST',
-      dataType: 'json',
+      dataType: 'script',
       data: {tweet: {url: url}},
       url: '/tweets',
 
       beforeSend: function () {
         NProgress.start();
-        $('.submit_button').val('Contacting Twitter, please wait...').animate({backgroundColor: '#ff6626'});
+        $('.submit_button').val('Contacting Twitter, please wait...').animate({backgroundColor: '#ff6626', color: '#ffffff'});
           if ( $('.logged_in_section').length > 0 ) {
             var fold = new OriDomi('.logged_in_section',{speed: 3000});
             fold.foldUp(function () {
@@ -73,46 +73,16 @@ function set_ajax() {
 
       complete: function () {
         NProgress.done();
+        $('.submit_button').fadeOut(1000);
+        $('.biginput').fadeOut(500);
       }
 
     }).done(function(data){
       console.log("AJAX success");
       console.log(data);
-      $('.submit_button').fadeOut(1000);
-      $('.biginput').fadeOut(500);
-      render_view(data);
-    }).fail(function () {
-      console.log("AJAX failed");
-      $('#results').append("AJAX failed, please try again.");
     });
   });
 }
-
-// for data object [0] = orig tweet, [1] = array of returned tweets, [2] = array of matched keywords
-function render_view(data){
-  var origTweet = "<div class='orig'><h3>" + data[0]['user']['name'] + "</h3><p>" + data[0]['text'] + "</p></div>";
-  $('#results').append(origTweet);
-  $('#results').fadeIn(1000);
-  switch (data[1].length) {
-  case 0:
-    $('#results').append("<br>No relevant tweets, please try another");
-    break;
-  case 1:
-    make_tweet(data[1][0],'center', data[2]);
-    break;
-  case 2:
-    make_tweet(data[1][1],'left', data[2]);
-    make_tweet(data[1][0],'right', data[2]);
-    break;
-  default:
-    $('#results').append("<br>Data Error, please try again");
-    break;
-  }
-  $('#results').append("<div class='clearfix'></div>");
-  add_recursive_elements();
-  bind_events();
-}
-
 
 
 // adds highlight span to matching words

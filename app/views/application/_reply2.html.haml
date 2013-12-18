@@ -1,25 +1,56 @@
 .reply
 
   .orig
+    %h3
+      = @data[0]['user']['name']
+    %p
+      = @data[0]['text']
 
   .answercards
 
-    .answercard.left
-      .answer_img_section
-      .answer_title_section
-      .answer_text_section
+    - if @data[1][0]['retweeted_status']
+      .answercard.left{data: {'id' => @data[1][0]['retweeted_status']['id_str'], 'user' => @data[1][0]['retweeted_status']['user']['screen_name'], 'retweeted' => 'true'  }}
+        .answer_img_section
+          = image_tag @data[1][0]['user']['profile_image_url'], class: "tweet_card_img"
+          = link_to (image_tag 'rt_blue.png'), "http://twitter.com/" + @data[1][0]['user']['screen_name'] + "/status/" + @data[1][0]['id_str'], class: "blue_twitter_link", target: "_blank"
+        .answer_title_section
+          = "@" + @data[1][0]['user']['screen_name'] + " " + "(RT)"
+        .answer_text_section
+          =  @data[1][0]['text'].html_safe
+    - else
+      .answercard.left{data: {'id' => @data[1][0]['id_str'], 'user' => @data[1][0]['user']['screen_name'], 'retweeted' => 'false'  }}
+        .answer_img_section
+          = image_tag @data[1][0]['user']['profile_image_url'], class: "tweet_card_img"
+          = link_to (image_tag 'twitter_blue.png'), "http://twitter.com/" + @data[1][0]['user']['screen_name'] + "/status/" + @data[1][0]['id_str'], class: "blue_twitter_link", target: "_blank"
+        .answer_title_section
+          = "@" + @data[1][0]['user']['screen_name'] + " " + "(RT)"
+        .answer_text_section
+          =  @data[1][0]['text'].html_safe
 
-    .answercard.right
-      .answer_img_section
-      .answer_title_section
-      .answer_text_section
+    - if @data[1][1]['retweeted_status']
+      .answercard.right{data: {'id' => @data[1][1]['retweeted_status']['id_str'], 'user' => @data[1][1]['retweeted_status']['user']['screen_name'], 'retweeted' => 'true'  }}
+        .answer_img_section
+          = image_tag @data[1][1]['user']['profile_image_url'], class: "tweet_card_img"
+          = link_to (image_tag 'rt_blue.png'), "http://twitter.com/" + @data[1][1]['user']['screen_name'] + "/status/" + @data[1][1]['id_str'], class: "blue_twitter_link", target: "_blank"
+        .answer_title_section
+          = "@" + @data[1][1]['user']['screen_name'] + " " + "(RT)"
+        .answer_text_section
+          =  @data[1][1]['text'].html_safe
+    - else
+      .answercard.right{data: {'id' => @data[1][1]['id_str'], 'user' => @data[1][1]['user']['screen_name'], 'retweeted' => 'false'  }}
+        .answer_img_section
+          = image_tag @data[1][1]['user']['profile_image_url'], class: "tweet_card_img"
+          = link_to (image_tag 'twitter_blue.png'), "http://twitter.com/" + @data[1][1]['user']['screen_name'] + "/status/" + @data[1][1]['id_str'], class: "blue_twitter_link", target: "_blank"
+        .answer_title_section
+          = "@" + @data[1][1]['user']['screen_name'] + " " + "(RT)"
+        .answer_text_section
+          =  @data[1][1]['text'].html_safe
 
   .center
-    = form_for @tweet do |t|
+    = form_for @tweet, remote: true do |t|
       = t.text_field :url, class: "biginput show_twitter_icon"
       = t.submit "Contextualize", class: "submit_button"
 
-tweet - text / screen name / tweet string / 
-retweet? : rt_blue.png : twitter_blue.png
-match keywords (ruby)
+:javascript
+  bind_events();
 

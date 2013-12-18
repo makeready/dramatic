@@ -25,7 +25,7 @@
             .tweet_container= render partial: 'tweets'
 
       .center
-        = form_for @tweet do |t|
+        = form_for @tweet, remote: true do |t|
           = t.text_field :url, class: "biginput show_twitter_icon"
           = t.submit "Contextualize", class: "submit_button"
 
