@@ -12,8 +12,6 @@ Cache dictionary
 
 stop fake loading bar if javascript has halted
 
-debug tiebreak
-
 tweet with a link should win a tiebreak
 
 clicking on result RTs does not append the original tweet link
