@@ -109,8 +109,42 @@ class Tweet < ActiveRecord::Base
     return JSON.parse(response.body)
   end
 
-  def generate_context(numtweets,listsize)
+  def take_top_n_matches(match_score_hash, numtweets)
+    sorted_match_score = match_score.sort_by{|k,v| v}.reverse
 
+    if sorted_match_score.length > 2
+      sorted_match_score = tiebreak(sorted_match_score) if sorted_match_score[1][1] == sorted_match_score[2][1]
+    end
+
+    sorted_match_score.take(numtweets)
+  end
+
+  def tiebreak(sorted_match_score)
+    score_to_break = sorted_match_score[1][1]
+    max_score = 0
+    second_highest_score = 0
+
+    sorted_match_score.each do |tweet|
+      favs = tweet[0]["favorite_count"]
+      rts = tweet[0]["retweet_count"]
+      tweet << favs + rts #SECRET SAUUUUUCE
+      if favs + rts > max_score
+        second_highest_score = max_score
+        max_score = favs + rts 
+        second_highest_score = max_score
+      end
+    end
+
+    if sorted_match_score[0][1] == score_to_break #if the top 2 tweets were tied, we need to take the top two tiebroken
+      tiebroken_match_score = sorted_match_score.delete_if {|tweet| tweet[1] == score_to_break && tweet[2] < second_highest_score}
+    else # we just need to take the top tiebroken
+      tiebroken_match_score = sorted_match_score.delete_if {|tweet| tweet[1] == score_to_break && tweet[2] < max_score}
+    end
+
+    tiebroken_match_score
+  end
+
+  def generate_context(numtweets,listsize)
 
 
     tweet_json = load_tweet_json
@@ -141,19 +175,19 @@ class Tweet < ActiveRecord::Base
 
     delete_list(list_id)
 
-    #match_score.each {|key, value| puts "#{key["text"]} is #{value}" }
+    found_tweets = take_top_n_matches(match_score,numtweets)
+
+    #found_tweets.each {|tweet| puts "#{tweet[0]["text"]} has a score of #{tweet[1]}." }
     
     data = []
     data[0] = tweet_json
-    data[1] = match_score.sort_by{|k,v| v}.reverse.take(numtweets)
+    data[1] = found_tweets
     data[2] = keywords
 
     # DATA STRUCTURE: [{original_tweet},[[{found_tweet1}, match_score],[{found_tweet2}, match_score]],["kw1","kw2","kw3"]]
 
     data
+
   end
 
-  def to_json
-    {url: self.url, body: self.body}
-  end
 end
