@@ -12,8 +12,9 @@ class TweetsController < ApplicationController
       # DATA STRUCTURE: [{original_tweet},[[{found_tweet1}, match_score],[{found_tweet2}, match_score]],["kw1","kw2","kw3"]]
       respond_to do |format|
         format.html {head :ok}
-        format.json { render json: @data }
+        format.js { render partial: "reply#{@data[1].length}" }
       end
+      
     else
       render :new
     end
