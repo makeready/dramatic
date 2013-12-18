@@ -4,7 +4,7 @@ make oauth an ajax call so that bgcolor can fade from default to user ave_color
 
 footer-colored border around user.feed box
 
-***need to handle API user overlimits
+***need to tell the user something if user.feed is blank
 
 add "was this useful?" statistic tracking at the end
 
@@ -12,6 +12,8 @@ Cache dictionary
 
 stop fake loading bar if javascript has halted
 
-implement match_score tiebreakers
+debug tiebreak
+
+tweet with a link should win a tiebreak
 
 clicking on result RTs does not append the original tweet link

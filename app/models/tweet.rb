@@ -110,7 +110,7 @@ class Tweet < ActiveRecord::Base
   end
 
   def take_top_n_matches(match_score_hash, numtweets)
-    sorted_match_score = match_score.sort_by{|k,v| v}.reverse
+    sorted_match_score = match_score_hash.sort_by{|k,v| v}.reverse
 
     if sorted_match_score.length > 2
       sorted_match_score = tiebreak(sorted_match_score) if sorted_match_score[1][1] == sorted_match_score[2][1]
@@ -131,15 +131,21 @@ class Tweet < ActiveRecord::Base
       if favs + rts > max_score
         second_highest_score = max_score
         max_score = favs + rts 
-        second_highest_score = max_score
       end
     end
+
+    puts "Sorted match score:"
+    sorted_match_score.each {|tweet| puts "#{tweet[0]["text"]}: #{tweet[2]}" }
 
     if sorted_match_score[0][1] == score_to_break #if the top 2 tweets were tied, we need to take the top two tiebroken
       tiebroken_match_score = sorted_match_score.delete_if {|tweet| tweet[1] == score_to_break && tweet[2] < second_highest_score}
     else # we just need to take the top tiebroken
       tiebroken_match_score = sorted_match_score.delete_if {|tweet| tweet[1] == score_to_break && tweet[2] < max_score}
     end
+    puts "Top score: #{max_score}"
+    puts "Second highest score: #{second_highest_score}"
+    puts "Tiebroken match score:"
+    tiebroken_match_score.each {|tweet| puts "#{tweet[0]["text"]}: #{tweet[2]}"}
 
     tiebroken_match_score
   end
