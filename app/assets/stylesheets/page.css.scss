@@ -251,7 +251,7 @@ input.submit_button:focus {
   margin: 20px 0;
   color: $dark-grey-color;
   cursor: pointer;
-  min-height: 80px;
+  min-height: 92px;
   .answer_img_section {
     position: absolute;
     left: 5px;
@@ -268,11 +268,13 @@ input.submit_button:focus {
 }
 
 .answercard.center {
-  width: 100%
+  width: 100%;
+  clear: right;
 }
 .answercard.right {
   width: 450px;
   float: right;
+  clear: right;
 }
 .answercard.left {
   width: 450px;

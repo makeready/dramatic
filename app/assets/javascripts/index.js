@@ -72,7 +72,6 @@ function set_ajax() {
       },
 
       complete: function () {
-        $('#results').removeAttr('id');
         NProgress.done();
       }
 
@@ -93,7 +92,7 @@ function set_ajax() {
 function render_view(data){
   var origTweet = "<div class='orig'><h3>" + data[0]['user']['name'] + "</h3><p>" + data[0]['text'] + "</p></div>";
   $('#results').append(origTweet);
-  $('#results').fadeIn(2000);
+  $('#results').fadeIn(1000);
   switch (data[1].length) {
   case 0:
     $('#results').append("<br>No relevant tweets, please try another");
@@ -109,6 +108,7 @@ function render_view(data){
     $('#results').append("<br>Data Error, please try again");
     break;
   }
+  $('#results').append("<div class='clearfix'></div>");
   add_recursive_elements();
   bind_events();
 }
@@ -163,10 +163,11 @@ function add_recursive_elements() {
   } else {
     element = $('#results').find('.orig');
   }
+  $('#results').removeAttr('id');
   var button = "<input class='submit_button' type='submit' value='Contextualize' style='display:none'>";
   var search = "<input class='biginput show_twitter_icon' type='text'>";
   var results = "<div id='results' class='center'></div>";
-  $(element).after(results).after(button).after(search);
+  $(element).after(button).after(search).after(results);
 }
 
 // bind mouseover and onclick events to new objects
