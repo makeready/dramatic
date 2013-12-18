@@ -34,13 +34,15 @@ $(document).ready(function () {
   var submitted = false;
 
   $('.biginput').keyup(function() {
-   if($(this).val() !== '') {
-    if (submitted === false) {
-      $('.submit_button').fadeIn();
-        }
-  } else {
-    $('.submit_button').fadeOut();
-  }
+    var info = $('.infotext').text("Submitting a tweet will check the poster's network for contextually similar tweets. \n You may then select a returned tweet to search that poster's tweet network.");
+    info.html(info.html().replace(/\n/g,'<br/><br/>'));
+    if($(this).val() !== '') {
+      if (submitted === false) {
+        $('.submit_button').fadeIn();
+          }
+    } else {
+      $('.submit_button').fadeOut();
+    }
   });
 
 });

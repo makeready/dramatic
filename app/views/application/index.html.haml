@@ -3,7 +3,7 @@
   =link_to "<h1>Context</h1>".html_safe, root_path, id: "header"
 
   - unless current_user
-    %p.intro_text.center Find contextually related tweets in your network by inputting a link.
+    %p.intro_text.center Find contextually related tweets by inputting a link.
 
   .center
     - if current_user 
@@ -17,7 +17,10 @@
 
           %hr
 
-          %p.grey Select a recent tweet or paste a link below to search.
+          %p.grey.infotext
+            Paste any tweet URL into the input box below to begin.
+            %br
+            %br Optionally, selecting a recent tweet here will paste the URL for you. 
 
         .recent_tweets
           %h2.recent_tweets_header Recent Tweets
