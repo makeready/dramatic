@@ -9,8 +9,6 @@ class TweetsController < ApplicationController
     @tweet.user_id = current_user.id
     if @tweet.save
       @data = @tweet.generate_context(2,1000)
-      # puts @data
-      # debugger
       # DATA STRUCTURE: [{original_tweet},[[{found_tweet1}, match_score],[{found_tweet2}, match_score]],["kw1","kw2","kw3"]]
       respond_to do |format|
         format.html {head :ok}
