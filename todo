@@ -1,7 +1,3 @@
-
-Todo:
-  - If user already logged in then logged out, check for 'one click login', else option to log in as diff user
-
 We should cache user.feed on login and give the user a button to manually refresh it
 
 make oauth an ajax call so that bgcolor can fade from default to user ave_color
