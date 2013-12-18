@@ -1,4 +1,4 @@
-.reply
+.reply{style: "display: none;"}
 
   .orig
     %h3
@@ -8,29 +8,31 @@
 
   .answercards
 
-    - if @data[1][0]['retweeted_status']
-      .answercard.center{data: {'id' => @data[1][0]['retweeted_status']['id_str'], 'user' => @data[1][0]['retweeted_status']['user']['screen_name'], 'retweeted' => 'true'  }}
+    - if @data[1][0][0]['retweeted_status']
+      .answercard.center{data: {'id' => @data[1][0][0]['retweeted_status']['id_str'], 'user' => @data[1][0][0]['retweeted_status']['user']['screen_name'], 'retweeted' => 'true'  }}
         .answer_img_section
-          = image_tag @data[1][0]['user']['profile_image_url'], class: "tweet_card_img"
-          = link_to (image_tag 'rt_blue.png'), "http://twitter.com/" + @data[1][0]['user']['screen_name'] + "/status/" + @data[1][0]['id_str'], class: "blue_twitter_link", target: "_blank"
+          = image_tag @data[1][0][0]['user']['profile_image_url'], class: "tweet_card_img"
+          = link_to (image_tag 'rt_blue.png'), "http://twitter.com/" + @data[1][0][0]['user']['screen_name'] + "/status/" + @data[1][0][0]['id_str'], class: "blue_twitter_link", target: "_blank"
         .answer_title_section
-          = "@" + @data[1][0]['user']['screen_name'] + " " + "(RT)"
+          = "@" + @data[1][0][0]['user']['screen_name'] + " " + "(RT)"
         .answer_text_section
-          =  @data[1][0]['text'].html_safe
+          =  @data[1][0][0]['text'].html_safe
     - else
-      .answercard.center{data: {'id' => @data[1][0]['id_str'], 'user' => @data[1][0]['user']['screen_name'], 'retweeted' => 'false'  }}
+      .answercard.center{data: {'id' => @data[1][0][0]['id_str'], 'user' => @data[1][0][0]['user']['screen_name'], 'retweeted' => 'false'  }}
         .answer_img_section
-          = image_tag @data[1][0]['user']['profile_image_url'], class: "tweet_card_img"
-          = link_to (image_tag 'twitter_blue.png'), "http://twitter.com/" + @data[1][0]['user']['screen_name'] + "/status/" + @data[1][0]['id_str'], class: "blue_twitter_link", target: "_blank"
+          = image_tag @data[1][0][0]['user']['profile_image_url'], class: "tweet_card_img"
+          = link_to (image_tag 'twitter_blue.png'), "http://twitter.com/" + @data[1][0][0]['user']['screen_name'] + "/status/" + @data[1][0][0]['id_str'], class: "blue_twitter_link", target: "_blank"
         .answer_title_section
-          = "@" + @data[1][0]['user']['screen_name'] + " " + "(RT)"
+          = "@" + @data[1][0][0]['user']['screen_name'] + " " + "(RT)"
         .answer_text_section
-          =  @data[1][0]['text'].html_safe
+          =  @data[1][0][0]['text'].html_safe
 
   .center
     = form_for @tweet, remote: true do |t|
       = t.text_field :url, class: "biginput show_twitter_icon"
       = t.submit "Contextualize", class: "submit_button"
+            
+#results
 
 :javascript
   bind_events();

@@ -1,2 +1,4 @@
-$('#results').after("<%= render partial: 'reply2' %>").removeAttr('id');
-console.log('render2');
+$('.biginput').remove();
+$('.submit_button').remove();
+$('#results').after("<%= j render partial: 'reply2' %>").remove();
+

@@ -50,7 +50,8 @@ $(document).ready(function () {
 // hooks AJAX loop onto submit button
 function set_ajax() {
   $('.submit_button').on('click', function (event) {
-    // event.preventDefault();
+    event.preventDefault();
+    $('.submit_button').attr("disabled", true);
     submitted = true;
     url = $('.biginput').val();
 
@@ -63,23 +64,18 @@ function set_ajax() {
       beforeSend: function () {
         NProgress.start();
         $('.submit_button').val('Contacting Twitter, please wait...').animate({backgroundColor: '#ff6626', color: '#ffffff'});
-          if ( $('.logged_in_section').length > 0 ) {
-            var fold = new OriDomi('.logged_in_section',{speed: 3000});
-            fold.foldUp(function () {
-              $('.logged_in_section').slideUp();
-            });
-          }
+        if ( $('.logged_in_section').length > 0 ) {
+          var fold = new OriDomi('.logged_in_section',{speed: 3000});
+          fold.foldUp(function () {
+            $('.logged_in_section').slideUp();
+          });
+        }
       },
 
       complete: function () {
         NProgress.done();
-        $('.submit_button').fadeOut(1000);
-        $('.biginput').fadeOut(500);
       }
 
-    }).done(function(data){
-      console.log("AJAX success");
-      console.log(data);
     });
   });
 }
@@ -103,6 +99,9 @@ function match_keywords(textArray, words) {
 
 // bind mouseover and onclick events to new objects
 function bind_events() {
+  console.log('binding events');
+  $('.biginput').val('');
+  $('.reply').fadeIn();
   $('.answercard').mouseenter(function () {
     $(this).css('background-color','#616161');
     $(this).css('color', '#ffffff');
