@@ -134,20 +134,14 @@ class Tweet < ActiveRecord::Base
       end
     end
 
-    puts "Sorted match score:"
-    sorted_match_score.each {|tweet| puts "#{tweet[0]["text"]}: #{tweet[2]}" }
-
     if sorted_match_score[0][1] == score_to_break #if the top 2 tweets were tied, we need to take the top two tiebroken
       tiebroken_match_score = sorted_match_score.delete_if {|tweet| tweet[1] == score_to_break && tweet[2] < second_highest_score}
     else # we just need to take the top tiebroken
       tiebroken_match_score = sorted_match_score.delete_if {|tweet| tweet[1] == score_to_break && tweet[2] < max_score}
     end
-    puts "Top score: #{max_score}"
-    puts "Second highest score: #{second_highest_score}"
-    puts "Tiebroken match score:"
-    tiebroken_match_score.each {|tweet| puts "#{tweet[0]["text"]}: #{tweet[2]}"}
 
     tiebroken_match_score
+
   end
 
   def generate_context(numtweets,listsize)
@@ -160,7 +154,7 @@ class Tweet < ActiveRecord::Base
     list_id = create_new_list(find_followings(tweet_json["user"]["id_str"]))
     keywords = find_keywords(tweet_json["text"])
     parsed_list = parse_list(list_id,listsize)
-
+    puts "Total tweets scanned: #{parsed_list.length}"
     if parsed_list != []
       parsed_list.each do |tweet|
         #puts tweet["text"]
@@ -188,7 +182,7 @@ class Tweet < ActiveRecord::Base
     data[1] = found_tweets
     data[2] = keywords
 
-    # DATA STRUCTURE: [{original_tweet},[[{found_tweet1}, match_score],[{found_tweet2}, match_score]],["kw1","kw2","kw3"]]
+    # DATA STRUCTURE: [{original_tweet},[[{found_tweet1}, match_score, tiebreak_score],[{found_tweet2}, match_score, tiebreak_score]],["kw1","kw2","kw3"]]
 
     data
 
