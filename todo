@@ -4,18 +4,18 @@ Todo:
 
 We should cache user.feed on login and give the user a button to manually refresh it
 
-Disable submit once algorithm is running
-
 make oauth an ajax call so that bgcolor can fade from default to user ave_color
 
-make sure site looks ok if bgpic is lightcolored
-
 footer-colored border around user.feed box
-
-make sure compare only looks at whole words
 
 ***need to handle API user overlimits
 
 add "was this useful?" statistic tracking at the end
 
-make sure "Ford's" scans as Ford etc
+Cache dictionary
+
+stop fake loading bar if javascript has halted
+
+implement match_score tiebreakers
+
+clicking on result RTs does not append the original tweet link

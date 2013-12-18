@@ -21,7 +21,6 @@ class Tweet < ActiveRecord::Base
     elsif verb == "POST"
       request = Net::HTTP::Post.new address.request_uri
     end
-
     puts "Api call: #{address}"
 
     request.oauth! http, consumer_key, access_token
@@ -30,9 +29,8 @@ class Tweet < ActiveRecord::Base
 
   end
 
-  def find_keywords(text = "")
+  def find_keywords(text)
     output = []
-    text = load_tweet_json["text"] if text == ""
     text.split.each do |word|
       clean_word = strip_punctuation(word)
       output << clean_word unless Dictionary.found?(clean_word)
@@ -54,21 +52,11 @@ class Tweet < ActiveRecord::Base
     tweet = nil
     if response.code == '200' then
       tweet = JSON.parse(response.body)
-      #print_tweet(tweet)
-      #puts "Keywords in tweet: #{find_keywords(tweet["text"],excluded_words)}"
     end
     return tweet
   end
 
-  def reply_to
-    load_tweet_json["in_reply_to_status_id_str"]
-  end
-
-  def find_poster_id
-    self.poster_id = load_tweet_json["user"]["id_str"]
-  end
-
-  def find_followings
+  def find_followings(poster_id)
     response = api_call("/1.1/friends/ids.json",[["user_id", poster_id],["stringify_ids", true]],"GET")
     return JSON.parse(response.body)["ids"]
   end
@@ -123,12 +111,18 @@ class Tweet < ActiveRecord::Base
 
   def generate_context(numtweets,listsize)
 
-    return [reply_to] if reply_to
+
+
+    tweet_json = load_tweet_json
+
+    return tweet_json["in_reply_to_status_id_str"] if tweet_json["in_reply_to_status_id_str"]
 
     match_score = Hash.new(0)
-    list_id = create_new_list(find_followings)
-    keywords = find_keywords
+
+    list_id = create_new_list(find_followings(tweet_json["user"]["id_str"]))
+    keywords = find_keywords(tweet_json["text"])
     parsed_list = parse_list(list_id,listsize)
+
     if parsed_list != []
       parsed_list.each do |tweet|
         #puts tweet["text"]
@@ -144,10 +138,19 @@ class Tweet < ActiveRecord::Base
         end
       end
     end
-    #match_score.each {|key, value| puts "#{key["text"]} is #{value}" }
+
     delete_list(list_id)
-    return match_score.sort_by{|k,v| v}.reverse.take(numtweets)
-    # RETURNS [[tweet,score],[tweet,score]]
+
+    #match_score.each {|key, value| puts "#{key["text"]} is #{value}" }
+    
+    data = []
+    data[0] = tweet_json
+    data[1] = match_score.sort_by{|k,v| v}.reverse.take(numtweets)
+    data[2] = keywords
+
+    # DATA STRUCTURE: [{original_tweet},[[{found_tweet1}, match_score],[{found_tweet2}, match_score]],["kw1","kw2","kw3"]]
+
+    data
   end
 
   def to_json
