@@ -8,7 +8,7 @@
   .center
     - if current_user 
 
-      .logged_in_section{style: "background-image:url('#{current_user.bgpic}')"} 
+      .logged_in_section{style: "background-image:url('#{current_user.bgpic}');border: 5px solid #{ave_color(30)};"} 
         .profile_card
           .profile_top
             =image_tag current_user.picture, class: "profile_img"
@@ -47,16 +47,16 @@
               function change() {
                 $('body').animate({
                   backgroundColor: "#8b412b"
-                }, 10000);
+                }, 5000);
                 $('body').animate({
                   backgroundColor: "#952a91"
-                }, 10000);
+                }, 5000);
                 $('body').animate({
                   backgroundColor: "#34278b"
-                }, 10000);
+                }, 5000);
                 $('body').animate({
                   backgroundColor: "#288b3e"
-                }, 10000);
+                }, 5000);
 
                 change();
               }

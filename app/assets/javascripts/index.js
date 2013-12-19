@@ -67,7 +67,7 @@ function set_ajax() {
         NProgress.start();
         $('.submit_button').val('Contacting Twitter, please wait...').animate({backgroundColor: '#ff6626', color: '#ffffff'});
         if ( $('.logged_in_section').length > 0 ) {
-          var fold = new OriDomi('.logged_in_section',{speed: 3000});
+          var fold = new OriDomi('.logged_in_section',{speed: 2000});
           fold.foldUp(function () {
             $('.logged_in_section').slideUp();
           });

@@ -145,10 +145,19 @@ class Tweet < ActiveRecord::Base
   end
 
   def highlight_keyword(tweet_text,keywords)
-    keywords.each do |keyword|
-      tweet_text.gsub!(keyword, "<span class='highlight'>#{keyword}</span>")
+    tweet_text_array = tweet_text.split
+    sentence = []
+    tweet_text_array.each do |word|
+      keywords.each do |keyword|
+        if word.gsub(/[^a-zA-Z0-9]/,'').downcase == keyword
+          newword = "<span class='highlight'>#{word}</span>"
+          sentence << newword
+        else
+          sentence << word
+        end
+      end
     end
-    tweet_text
+    sentence.join(" ")
   end
 
   def generate_context(numtweets,listsize)

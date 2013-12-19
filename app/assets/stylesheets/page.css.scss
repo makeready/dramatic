@@ -65,14 +65,13 @@
   padding-bottom: 25px;
   margin-bottom: 20px;
   border: 1px solid black;
-  height: 320px;
-  border: 5px solid rgba(0,0,0,0.3);
+  height: 350px;
 }
 
 .profile_card {
   display: inline-block;
   width: 250px;
-  height: 300px;
+  height: 340px;
   padding: 5px;
   float: left;
   background-color: rgba(255,255,255,0.8);
@@ -118,7 +117,7 @@
 .tweet_card {
   background-color: rgba(255,255,255,0.95);
   margin-bottom: 5px;
-  height: 83px;
+  height: 93px;
   cursor: pointer;
   overflow: hidden;
 }
