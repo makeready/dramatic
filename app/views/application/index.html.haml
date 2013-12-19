@@ -1,13 +1,8 @@
 #wrapper
 
-  =link_to "<h1>Context</h1>".html_safe, root_path, id: "header"
-
-  - unless current_user
-    %p.intro_text.center A tool for finding contextually related tweets.
-
   .center
     - if current_user 
-
+      =link_to "<h1>Context</h1>".html_safe, root_path, id: "header"
       .logged_in_section{style: "background-image:url('#{current_user.bgpic}');border: 5px solid #{ave_color(30)};"} 
         .profile_card
           .profile_top
@@ -18,9 +13,9 @@
           %hr
 
           %p.grey.infotext
-            Paste any tweet URL into the input box below to begin.
+            Search any user's network for contexually-related tweets.
             %br
-            %br Optionally, selecting a recent tweet here will paste the URL for you. 
+            %br Paste a tweet URL into the input box below or select a recent tweet from your feed to begin.         
 
         .recent_tweets
           %h2.recent_tweets_header Recent Tweets
@@ -36,35 +31,37 @@
       
 
     - else
-      %a.twitter_button_link{href: "/auth/twitter"}
-        .sign_in_button.center
-          .twitter_button_text Sign in with Twitter
-          :javascript
-            $(document).ready(function () {
-
-              change();
-
-              function change() {
-                $('body').animate({
-                  backgroundColor: "#8b412b"
-                }, 5000);
-                $('body').animate({
-                  backgroundColor: "#952a91"
-                }, 5000);
-                $('body').animate({
-                  backgroundColor: "#34278b"
-                }, 5000);
-                $('body').animate({
-                  backgroundColor: "#288b3e"
-                }, 5000);
+      #not_logged_in
+        =link_to "<h1>Context</h1>".html_safe, root_path, id: "header", style: "font-size:180px;line-height:180px;"
+        %p.intro_text.center Demystify vague tweets.
+        %a.twitter_button_link{href: "/auth/twitter"}
+          .sign_in_button.center
+            .twitter_button_text Sign in with Twitter
+            :javascript
+              $(document).ready(function () {
 
                 change();
-              }
 
-            });
+                function change() {
+                  $('body').animate({
+                    backgroundColor: "#8b412b"
+                  }, 5000);
+                  $('body').animate({
+                    backgroundColor: "#952a91"
+                  }, 5000);
+                  $('body').animate({
+                    backgroundColor: "#34278b"
+                  }, 5000);
+                  $('body').animate({
+                    backgroundColor: "#288b3e"
+                  }, 5000);
 
-           
+                  change();
+                }
 
+              });
+
+             
 
 
 

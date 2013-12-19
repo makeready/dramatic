@@ -10,7 +10,7 @@ class Dictionary < ActiveRecord::Base
     common_adverbs = ['maybe', 'kinda', 'sorta', 'somewhat','anyway', 'back','then','only','not','now']
     common_adjectives = ['just','same','new','old','still']
     common_nouns = ['kind','lot','times','time']
-    slang = ['wtf','smh','smdh','lol','lmao','yall','bro','idk']
+    slang = ['wtf','smh','smdh','lol','lmao','yall','bro','idk','rt']
 
     wordlist = pronouns + articles + prepositions + conjunctions + contractions + common_verbs + common_adverbs + common_adjectives + common_nouns + slang
     if wordlist.include?(word) || word == ''

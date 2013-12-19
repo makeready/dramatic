@@ -241,7 +241,7 @@ input.submit_button:focus {
   color: $dark-grey-color;
   padding: 10px 0;
   h3 {
-    color: $grey-color;
+    color: rgba(0,0,0,0.7);
   }
   p {
     margin: 0 100px;
@@ -297,6 +297,17 @@ input.submit_button:focus {
   margin: 25px 0;
 }
 
+#not_logged_in {
+  margin: auto;   
+  position: absolute;   
+  top: 0; left: 0; bottom: 0; right: 0;
+  width: 700px;
+  height: 50%;
+}
+
+.intro_text {
+  margin-top: 15px;
+}
 
 
 

@@ -148,14 +148,11 @@ class Tweet < ActiveRecord::Base
     tweet_text_array = tweet_text.split
     sentence = []
     tweet_text_array.each do |word|
-      keywords.each do |keyword|
-        if word.gsub(/[^a-zA-Z0-9]/,'').downcase == keyword
-          newword = "<span class='highlight'>#{word}</span>"
-          sentence << newword
-        else
-          sentence << word
-        end
+      no_punc_word = word.gsub(/[^a-zA-Z0-9]/,'')
+      if keywords.include?(no_punc_word.downcase)
+        word.gsub!( no_punc_word ,"<span class='highlight'>#{no_punc_word}</span>")
       end
+      sentence << word
     end
     sentence.join(" ")
   end

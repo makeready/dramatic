@@ -1,8 +1,5 @@
 $(document).ready(function () {
 
-  // init flowtype
-  $('h1').flowtype();
-
   // init AJAX
   set_ajax();
 
@@ -34,11 +31,12 @@ $(document).ready(function () {
   var submitted = false;
 
   $('.biginput').keyup(function() {
-    var info = $('.infotext').text("Submitting a tweet will check the poster's network for contextually similar tweets. \n You may then select a returned tweet to search that poster's tweet network.");
-    info.html(info.html().replace(/\n/g,'<br/><br/>'));
-    if($(this).val() !== '') {
-      if (submitted === false) {
+    if($(this).val() !== '' && submitted === false ) {
+      var input = $('.biginput').val();
+      if ( input.indexOf("twitter.com/") !== -1 ) {
         $('.submit_button').fadeIn();
+          } else {
+            $('.submit_button').fadeOut();
           }
     } else {
       $('.submit_button').fadeOut();
@@ -65,7 +63,7 @@ function set_ajax() {
 
       beforeSend: function () {
         NProgress.start();
-        $('.submit_button').val('Contacting Twitter, please wait...').animate({backgroundColor: '#ff6626', color: '#ffffff'});
+        $('.submit_button').val('Demystifying...').animate({backgroundColor: '#ff6626', color: '#ffffff'});
         if ( $('.logged_in_section').length > 0 ) {
           var fold = new OriDomi('.logged_in_section',{speed: 2000});
           fold.foldUp(function () {
