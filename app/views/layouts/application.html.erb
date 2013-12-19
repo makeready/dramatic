@@ -10,17 +10,18 @@
   <meta property="og:type" content="website"/>
   <meta property="og:url" content="http://www.twittercontext.com"/>
   <meta property="og:site_name" content="Twitter Context"/>
-  <meta property="og:image" content="<%= image_path 'og.png' %>" />
+  <meta property="og:image" content="<%= image_url 'og.png' %>" />
   <meta property="fb:admins" content="100005308209822"/>
   <meta name="twitter:url" content="http://www.twittercontext.com">
   <meta name="twitter:card" content="demystify vague tweets">
   <meta name="twitter:title" content="Twitter Context">
-  <meta name="twitter:image" content="<%= image_path 'og.png' %>">
+  <meta name="twitter:image" content="<%= image_url 'og.png' %>">
   <title>Twitter Context</title>
   <%= favicon_link_tag 'favicon.ico' %>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => false %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => false %>
   <link href='http://fonts.googleapis.com/css?family=Karla' rel='stylesheet' type='text/css'>
+  <link rel="image_src" href="<%= image_path 'og.png' %>" />
   <%= csrf_meta_tags %>
 </head>
 <body style="background-color:<%= ave_color %>">
