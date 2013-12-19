@@ -83,22 +83,6 @@ function set_ajax() {
 }
 
 
-// adds highlight span to matching words
-function match_keywords(textArray, words) {
-  var returnArray = [];
-  for ( i=0 ; i < textArray.length ; i++ ) {
-    var single = textArray[i].replace(/[^a-zA-Z0-9]/g,'');
-    var answer = $.inArray(single,words);
-    if ( answer === -1 ) {
-      returnArray.push(textArray[i]);
-    } else {
-      returnArray.push("<span class='highlight'>" + textArray[i] + "</span>");
-    }
-  }
-  return returnArray.join(" ");
-}
-
-
 // bind mouseover and onclick events to new objects
 function bind_events() {
   console.log('binding events');

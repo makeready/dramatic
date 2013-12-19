@@ -144,6 +144,13 @@ class Tweet < ActiveRecord::Base
 
   end
 
+  def highlight_keyword(tweet_text,keywords)
+    keywords.each do |keyword|
+      tweet_text.gsub!(keyword, "<span class='highlight'>#{keyword}</span>")
+    end
+    tweet_text
+  end
+
   def generate_context(numtweets,listsize)
     tweet_json = load_tweet_json
 
@@ -162,7 +169,8 @@ class Tweet < ActiveRecord::Base
         keywords.each do |keyword|
           clean_tweet.each do |clean_tweet_keyword|
             if clean_tweet_keyword == keyword
-              match_score[tweet] += 1 
+              match_score[tweet] += 1
+
               puts "Added 1 to match score, #{clean_tweet} included #{keyword}."
               puts "New match score is #{match_score[tweet]}."
             end
@@ -175,12 +183,18 @@ class Tweet < ActiveRecord::Base
 
     found_tweets = take_top_n_matches(match_score,numtweets)
 
+    found_tweets.each do |tweet|
+      clean_tweet = tweet[0]["text"]
+      tweet[0]["text"] = highlight_keyword(clean_tweet,keywords)
+    end
+
     #found_tweets.each {|tweet| puts "#{tweet[0]["text"]} has a score of #{tweet[1]}." }
     
     data = []
     data[0] = tweet_json
     data[1] = found_tweets
     data[2] = keywords
+
 
     # DATA STRUCTURE: [{original_tweet},[[{found_tweet1}, match_score, tiebreak_score],[{found_tweet2}, match_score, tiebreak_score]],["kw1","kw2","kw3"]]
 
