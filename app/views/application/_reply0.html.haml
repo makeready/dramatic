@@ -7,9 +7,26 @@
       = @data[0]['text']
 
   .answercards
-    %p.highlight.notweets No relevant tweets found, please try another URL
+    %p.highlight.notweets No related tweets found, click here to try another
       
 #results
 
 :javascript
-  bind_events();
+  $(document).ready(function(){
+    $('.reply').fadeIn();
+    $('.notweets').mouseenter(function () {
+     $(this).css('background-color', 'rgba(0,0,0,0.5)');
+    });
+    $('.notweets').mouseleave(function () {
+     $(this).css('background-color', 'rgba(0,0,0,0.4)');
+    });
+
+    $('.notweets').on('click', function () {
+     location.reload();
+    });
+  });
+
+
+
+
+  

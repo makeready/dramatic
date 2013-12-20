@@ -93,7 +93,6 @@ function ajax(url) {
 // bind mouseover and onclick events to new objects
 function bind_events() {
   console.log('binding events');
-  $('.biginput').val('');
   $('.reply').fadeIn();
   // hover events
   $('.answercard').mouseenter(function () {
