@@ -31,12 +31,16 @@ $(document).ready(function () {
 
   $('.next').on('click', function(){
     $('.tweet_container').css('margin-top', function (index, curValue) {
-    return parseInt(curValue, 10) - 294 + 'px';
+    if(parseInt(curValue,10) > -19110){
+      return parseInt(curValue, 10) - 294 + 'px';
+    };
     });
   });
   $('.prev').on('click', function(){
     $('.tweet_container').css('margin-top', function (index, curValue) {
-    return parseInt(curValue, 10) + 294 + 'px';
+    if(parseInt(curValue,10) < 0){
+      return parseInt(curValue, 10) + 294 + 'px';
+    };
     });
   });
 
