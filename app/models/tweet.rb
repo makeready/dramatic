@@ -170,17 +170,33 @@ class Tweet < ActiveRecord::Base
     puts "Total tweets scanned: #{parsed_list.length}"
     if parsed_list != []
       parsed_list.each do |tweet|
-        #puts tweet["text"]
+        link_score = 0
+        prev_match = false
         clean_tweet = find_keywords(tweet["text"])
-        keywords.each do |keyword|
-          clean_tweet.each do |clean_tweet_keyword|
+        clean_tweet.each do |clean_tweet_keyword|
+          if prev_match == true 
+            link_score += 1
+            puts 'link_score + 1'
+          elsif prev_match == false && link_score > 1
+            puts 'link score:: ' + link_score.to_s
+            match_score[tweet] += link_score
+            link_score = 0
+          end
+          prev_match = false
+          keywords.each do |keyword|        
             if clean_tweet_keyword == keyword
               match_score[tweet] += 1
+              prev_match = true
 
               puts "Added 1 to match score, #{clean_tweet} included #{keyword}."
               puts "New match score is #{match_score[tweet]}."
             end
           end
+        end
+        if link_score > 1
+          puts 'link score:: ' + link_score.to_s
+          match_score[tweet] += link_score
+          link_score = 0
         end
       end
     end
