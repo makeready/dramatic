@@ -109,9 +109,19 @@
   margin-left: 290px;
 }
 
+
 .recent_tweets_header {
   background-color: rgba(255,255,255,0.8);
   margin-bottom: 5px;
+}
+
+.recent_tweets_feed{
+  overflow-y: hidden;
+  height: 294px;
+}
+
+.tweet_container{
+  margin-top:0px
 }
 
 .tweet_card {
@@ -164,7 +174,6 @@
   padding: 5px;
   position: relative;
   text-decoration: none;
-  top: 3px;
   :link, :visited {
     color: #000000;
   }
@@ -186,7 +195,7 @@ a.paginate_button:hover {
 
 .prev {
   position: absolute;
-  left: 270px;
+  left: 530px;
 }
 
 .next {

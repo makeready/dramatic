@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
     consumer_key = OAuth::Consumer.new(ENV['TWITTER_REST_API1'],ENV['TWITTER_REST_API2'])
     access_token = OAuth::Token.new(token,secret)
     path = "/1.1/statuses/home_timeline.json"
-    encoded_query = URI.encode_www_form([["count",40]])
+    encoded_query = URI.encode_www_form([["count",200]])
     baseurl = "https://api.twitter.com"
     verb = "GET"
     address = URI("#{baseurl}#{path}?#{encoded_query}")

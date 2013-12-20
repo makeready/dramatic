@@ -27,6 +27,19 @@ $(document).ready(function () {
    $('.profile_text').html(username);
   });
 
+  //functionality for "older" and "newer" buttons
+
+  $('.next').on('click', function(){
+    $('.tweet_container').css('margin-top', function (index, curValue) {
+    return parseInt(curValue, 10) - 294 + 'px';
+    });
+  });
+  $('.prev').on('click', function(){
+    $('.tweet_container').css('margin-top', function (index, curValue) {
+    return parseInt(curValue, 10) + 294 + 'px';
+    });
+  });
+
   // enable submit button on input
   var submitted = false;
 
@@ -108,6 +121,7 @@ function bind_events() {
     $(this).find('.tweet_card_header').css('color','rgba(0,0,0,0.1)');
     $(this).find('.blue_twitter_link').css('visibility','hidden');
   });
+
   // twitter card title hover & click
   $('.answer_title_section').mouseenter(function () {
     $(this).css('background-color','rgba(0,0,0,0.2)');
