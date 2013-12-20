@@ -190,8 +190,13 @@ class Tweet < ActiveRecord::Base
     found_tweets = take_top_n_matches(match_score,numtweets)
 
     found_tweets.each do |tweet|
-      clean_tweet = tweet[0]["text"]
-      tweet[0]["text"] = highlight_keyword(clean_tweet,keywords)
+      if tweet[0]['retweeted_status']
+        clean_tweet = tweet[0]["retweeted_status"]["text"]
+        tweet[0]["retweeted_status"]["text"] = highlight_keyword(clean_tweet,keywords)
+      else
+        clean_tweet = tweet[0]["text"]
+        tweet[0]["text"] = highlight_keyword(clean_tweet,keywords)
+      end
     end
 
     #found_tweets.each {|tweet| puts "#{tweet[0]["text"]} has a score of #{tweet[1]}." }

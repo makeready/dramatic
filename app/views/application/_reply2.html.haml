@@ -11,13 +11,13 @@
     - if @data[1][0][0]['retweeted_status']
       .answercard.left{data: {'id' => @data[1][0][0]['retweeted_status']['id_str'], 'user' => @data[1][0][0]['retweeted_status']['user']['screen_name'], 'retweeted' => 'true'  }}
         .answer_img_section
-          = image_tag @data[1][0][0]['user']['profile_image_url'], class: "tweet_card_img"
-          = link_to (image_tag 'rt_blue.png'), "http://twitter.com/" + @data[1][0][0]['user']['screen_name'] + "/status/" + @data[1][0][0]['id_str'], class: "blue_twitter_link", target: "_blank"
+          = image_tag @data[1][0][0]['retweeted_status']['user']['profile_image_url'], class: "tweet_card_img"
+          = link_to (image_tag 'rt_blue.png'), "http://twitter.com/" + @data[1][0][0]['retweeted_status']['user']['screen_name'] + "/status/" + @data[1][0][0]['retweeted_status']['id_str'], class: "blue_twitter_link", target: "_blank"
         .answer_title_section
-          = "@" + @data[1][0][0]['user']['screen_name'] + " (RT) " 
+          = "@" + @data[1][0][0]['retweeted_status']['user']['screen_name'] + " " + "(RT'd by @" + @data[1][0][0]['user']['screen_name'] + ")"
           %span{class: 'highlight'}= "(" + @data[1][0][1].to_s + ")"
         .answer_text_section
-          =  @data[1][0][0]['text'].html_safe
+          =  @data[1][0][0]['retweeted_status']['text'].html_safe
     - else
       .answercard.left{data: {'id' => @data[1][0][0]['id_str'], 'user' => @data[1][0][0]['user']['screen_name'], 'retweeted' => 'false'  }}
         .answer_img_section
@@ -32,13 +32,13 @@
     - if @data[1][1][0]['retweeted_status']
       .answercard.right{data: {'id' => @data[1][1][0]['retweeted_status']['id_str'], 'user' => @data[1][1][0]['retweeted_status']['user']['screen_name'], 'retweeted' => 'true'  }}
         .answer_img_section
-          = image_tag @data[1][1][0]['user']['profile_image_url'], class: "tweet_card_img"
-          = link_to (image_tag 'rt_blue.png'), "http://twitter.com/" + @data[1][1][0]['user']['screen_name'] + "/status/" + @data[1][1][0]['id_str'], class: "blue_twitter_link", target: "_blank"
+          = image_tag @data[1][1][0]['retweeted_status']['user']['profile_image_url'], class: "tweet_card_img"
+          = link_to (image_tag 'rt_blue.png'), "http://twitter.com/" + @data[1][1][0]['retweeted_status']['user']['screen_name'] + "/status/" + @data[1][1][0]['retweeted_status']['id_str'], class: "blue_twitter_link", target: "_blank"
         .answer_title_section
-          = "@" + @data[1][1][0]['user']['screen_name'] + " (RT) " 
+          = "@" + @data[1][1][0]['retweeted_status']['user']['screen_name'] + " " + "(RT'd by @" + @data[1][1][0]['user']['screen_name'] + ")"
           %span{class: 'highlight'}= "(" + @data[1][1][1].to_s + ")"
         .answer_text_section
-          =  @data[1][1][0]['text'].html_safe
+          =  @data[1][1][0]['retweeted_status']['text'].html_safe
     - else
       .answercard.right{data: {'id' => @data[1][1][0]['id_str'], 'user' => @data[1][1][0]['user']['screen_name'], 'retweeted' => 'false'  }}
         .answer_img_section

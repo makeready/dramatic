@@ -48,7 +48,7 @@ class User < ActiveRecord::Base
     elsif verb == "POST"
       request = Net::HTTP::Post.new address.request_uri
     end
-
+    puts "API Call: #{request}"
     request.oauth! http, consumer_key, access_token
     http.start
     response = http.request request
