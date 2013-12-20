@@ -29,7 +29,7 @@ $(document).ready(function () {
 
   // enable submit button on input
   var submitted = false;
-
+  
   $('.biginput').keyup(function() {
     if($(this).val() !== '' && submitted === false ) {
       var input = $('.biginput').val();
@@ -122,15 +122,18 @@ function bind_events() {
 
   // fade in new submit button
   var submitted = false;
-  $('.biginput').keyup(function() {
-   if($(this).val() !== '') {
-    if (submitted === false) {
-      $('.submit_button').fadeIn();
-        }
-  } else {
-    $('.submit_button').fadeOut();
-  }
-  });
+ $('.biginput').keyup(function() {
+   if($(this).val() !== '' && submitted === false ) {
+     var input = $('.biginput').val();
+     if ( input.indexOf("twitter.com/") !== -1 ) {
+       $('.submit_button').fadeIn();
+         } else {
+           $('.submit_button').fadeOut();
+         }
+   } else {
+     $('.submit_button').fadeOut();
+   }
+ });
 
   //add ajax functionality
   set_ajax();
