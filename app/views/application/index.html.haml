@@ -26,8 +26,8 @@
               .tweet_container= render partial: 'expired_key_feed'
         .navigation_buttons
           .paginates
-            .paginate_button.prev= "Newer"
-            .paginate_button.next= "Older"
+            .paginate_button.prev= "prev"
+            .paginate_button.next= "next"
 
       .center
         = form_for @tweet, remote: true do |t|

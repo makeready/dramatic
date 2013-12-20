@@ -30,18 +30,26 @@ $(document).ready(function () {
   //functionality for "older" and "newer" buttons
 
   $('.next').on('click', function(){
-    $('.tweet_container').css('margin-top', function (index, curValue) {
-    if(parseInt(curValue,10) > -19110){
-      return parseInt(curValue, 10) - 294 + 'px';
-    };
-    });
+    var current_val = $('.tweet_container').css('margin-top');
+    if (current_val == '-18816px'){
+      $('.next').fadeOut();
+    }
+    if (parseInt(current_val,10) > -19110){
+      $('.prev').fadeIn();
+      var next_val = parseInt(current_val, 10) - 294 + 'px';
+      $('.tweet_container').animate({'margin-top':next_val},400);
+    }
   });
   $('.prev').on('click', function(){
-    $('.tweet_container').css('margin-top', function (index, curValue) {
-    if(parseInt(curValue,10) < 0){
-      return parseInt(curValue, 10) + 294 + 'px';
-    };
-    });
+    var current_val = $('.tweet_container').css('margin-top');
+    if (current_val == '-294px'){
+      $('.prev').fadeOut();
+    }
+    if (parseInt(current_val,10) < 0){
+      $('.next').fadeIn();
+      var next_val = parseInt(current_val, 10) + 294 + 'px';
+      $('.tweet_container').animate({'margin-top':next_val},400);
+    }
   });
 
   // enable submit button on input
