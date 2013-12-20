@@ -21,6 +21,8 @@
           %h2.recent_tweets_header Recent Tweets
           - if @user_feed != []
             .tweet_container= render partial: 'tweets'
+          - else
+            .tweet_container= render partial: 'expired_key_feed'
 
       .center
         = form_for @tweet, remote: true do |t|
