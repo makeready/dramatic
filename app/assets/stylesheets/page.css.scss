@@ -317,9 +317,13 @@ input.submit_button:focus {
   float: right;
   display: inline;
   margin-right: 30px;
-  color: rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.4);
 }
 
+.api_limit {
+  background-color: rgba(255,255,255,0.9);
+  padding: 10px 0;
+}
 
 
 
