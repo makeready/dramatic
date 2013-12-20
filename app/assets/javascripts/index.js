@@ -27,6 +27,31 @@ $(document).ready(function () {
    $('.profile_text').html(username);
   });
 
+  //functionality for "older" and "newer" buttons
+
+  $('.next').on('click', function(){
+    var current_val = $('.tweet_container').css('margin-top');
+    if (current_val == '-18816px'){
+      $('.next').fadeOut();
+    }
+    if (parseInt(current_val,10) > -19110){
+      $('.prev').fadeIn();
+      var next_val = parseInt(current_val, 10) - 294 + 'px';
+      $('.tweet_container').animate({'margin-top':next_val},400);
+    }
+  });
+  $('.prev').on('click', function(){
+    var current_val = $('.tweet_container').css('margin-top');
+    if (current_val == '-294px'){
+      $('.prev').fadeOut();
+    }
+    if (parseInt(current_val,10) < 0){
+      $('.next').fadeIn();
+      var next_val = parseInt(current_val, 10) + 294 + 'px';
+      $('.tweet_container').animate({'margin-top':next_val},400);
+    }
+  });
+
   // enable submit button on input
   var submitted = false;
 
@@ -108,6 +133,7 @@ function bind_events() {
     $(this).find('.tweet_card_header').css('color','rgba(0,0,0,0.1)');
     $(this).find('.blue_twitter_link').css('visibility','hidden');
   });
+
   // twitter card title hover & click
   $('.answer_title_section').mouseenter(function () {
     $(this).css('background-color','rgba(0,0,0,0.2)');
