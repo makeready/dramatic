@@ -68,7 +68,7 @@ class Tweet < ActiveRecord::Base
 
   def create_empty_list
     timestamp = Time.now.to_i.to_s
-    response = api_call("/1.1/lists/create.json",[["name", "context#{timestamp}"]],"POST")
+    response = api_call("/1.1/lists/create.json",[["name", "context#{timestamp}"],["mode", "private"]],"POST")
     return JSON.parse(response.body)["id_str"]
   end
 
