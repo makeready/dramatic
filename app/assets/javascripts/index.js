@@ -29,7 +29,7 @@ $(document).ready(function () {
 
   // enable submit button on input
   var submitted = false;
-  
+
   $('.biginput').keyup(function() {
     if($(this).val() !== '' && submitted === false ) {
       var input = $('.biginput').val();
@@ -54,29 +54,38 @@ function set_ajax() {
     $('.submit_button').attr("disabled", true);
     submitted = true;
     url = $('.biginput').val();
+    ajax(url);
+  });
+}
 
-    $.ajax({
-      method: 'POST',
-      dataType: 'script',
-      data: {tweet: {url: url}},
-      url: '/tweets',
+// ajax itself
+function ajax(url) {
+  $.ajax({
+    method: 'POST',
+    dataType: 'script',
+    data: {tweet: {url: url}},
+    url: '/tweets',
 
-      beforeSend: function () {
-        NProgress.start();
-        $('.submit_button').val('Demystifying...').animate({backgroundColor: '#ff6626', color: '#ffffff'});
-        if ( $('.logged_in_section').length > 0 ) {
-          var fold = new OriDomi('.logged_in_section',{speed: 2000});
-          fold.foldUp(function () {
-            $('.logged_in_section').slideUp();
-          });
-        }
-      },
-
-      complete: function () {
-        NProgress.done();
+    beforeSend: function () {
+      NProgress.start();
+      $('.submit_button').val('Demystifying...').animate({backgroundColor: '#ff6626', color: '#ffffff'});
+      if ( $('.logged_in_section').length > 0 ) {
+        var fold = new OriDomi('.logged_in_section',{speed: 2000});
+        fold.foldUp(function () {
+          $('.logged_in_section').slideUp();
+        });
       }
+    },
 
-    });
+    error: function () {
+      alert("Something went wrong :/ please try the same tweet again");
+      location.reload();
+    },
+
+    complete: function () {
+      NProgress.done();
+    }
+
   });
 }
 
@@ -113,27 +122,16 @@ function bind_events() {
     window.open(url , '_blank');
   });
   // tweet card paste to box
+  var clicked = false;
   $('.answercard').on('click', function (){
-    var id = $(this).data('id');
-    var user = $(this).data('user');
-    $('.biginput').val('http://twitter.com/' + user + '/status/' + id);
-    $('.biginput').keyup();
+    if ( clicked == false ) {
+      clicked = true;
+      var id = $(this).data('id');
+      var user = $(this).data('user');
+      var url = 'http://twitter.com/' + user + '/status/' + id;
+      ajax(url);
+    }
   });
-
-  // fade in new submit button
-  var submitted = false;
- $('.biginput').keyup(function() {
-   if($(this).val() !== '' && submitted === false ) {
-     var input = $('.biginput').val();
-     if ( input.indexOf("twitter.com/") !== -1 ) {
-       $('.submit_button').fadeIn();
-         } else {
-           $('.submit_button').fadeOut();
-         }
-   } else {
-     $('.submit_button').fadeOut();
-   }
- });
 
   //add ajax functionality
   set_ajax();

@@ -49,11 +49,6 @@
           %span{class: 'highlight'}= "(" + @data[1][1][1].to_s + ")"
         .answer_text_section
           =  @data[1][1][0]['text'].html_safe
-
-  .center
-    = form_for @tweet, remote: true do |t|
-      = t.text_field :url, class: "biginput show_twitter_icon"
-      = t.submit "Contextualize", class: "submit_button"
       
 #results
 

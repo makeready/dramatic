@@ -8,11 +8,6 @@
 
   .answercards
     %p.highlight.notweets No relevant tweets found, please try another URL
-       
-  .center
-    = form_for @tweet, remote: true do |t|
-      = t.text_field :url, class: "biginput show_twitter_icon"
-      = t.submit "Contextualize", class: "submit_button"
       
 #results
 
