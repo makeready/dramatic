@@ -86,6 +86,7 @@ function bind_events() {
   console.log('binding events');
   $('.biginput').val('');
   $('.reply').fadeIn();
+  // hover events
   $('.answercard').mouseenter(function () {
     $(this).css('background-color','#616161');
     $(this).css('color', '#ffffff');
@@ -99,7 +100,18 @@ function bind_events() {
     $(this).find('.tweet_card_header').css('color','rgba(0,0,0,0.1)');
     $(this).find('.blue_twitter_link').css('visibility','hidden');
   });
-
+  // twitter card title hover & click
+  $('.answer_title_section').mouseenter(function () {
+    $(this).css('background-color','rgba(0,0,0,0.2)');
+  });
+  $('.answer_title_section').mouseleave(function () {
+    $(this).css('background-color','rgba(0,0,0,0.1)');
+  });
+  $('.answer_title_section').on('click', function (){
+    var user = $(this).parent().data('user');
+    var url = "http://twitter.com/" + user;
+    window.open(url , '_blank');
+  });
   // tweet card paste to box
   $('.answercard').on('click', function (){
     var id = $(this).data('id');

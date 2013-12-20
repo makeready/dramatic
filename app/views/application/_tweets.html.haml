@@ -45,4 +45,17 @@
     $('.biginput').keyup();
   });
   
+  // twitter card title click
+  $('.tweet_card_header').mouseenter(function () {
+    $(this).css('background-color','rgba(0,0,0,0.2)');
+  });
+  $('.tweet_card_header').mouseleave(function () {
+    $(this).css('background-color','rgba(0,0,0,0.1)');
+  });
+
+  $('.tweet_card_header').on('click', function (){
+    var user = $(this).parent().data('user');
+    var url = "http://twitter.com/" + user;
+    window.open(url , '_blank');
+  });
 
