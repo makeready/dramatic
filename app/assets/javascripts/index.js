@@ -110,7 +110,7 @@ function ajax(url) {
 
     error: function () {
       alert("Something went wrong :/ please try the same tweet again");
-      ajax(url);
+      location.reload();
     },
 
     complete: function () {
