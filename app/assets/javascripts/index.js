@@ -109,8 +109,8 @@ function ajax(url) {
     },
 
     error: function () {
-      alert("Something went wrong :/ please try the same tweet again");
-      location.reload();
+      NProgress.start();
+      ajax(url);
     },
 
     complete: function () {
