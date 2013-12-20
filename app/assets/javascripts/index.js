@@ -93,13 +93,19 @@ function ajax(url) {
 
     beforeSend: function () {
       NProgress.start();
-      $('.submit_button').val('Demystifying...').animate({backgroundColor: '#ff6626', color: '#ffffff'});
-      if ( $('.logged_in_section').length > 0 ) {
-        var fold = new OriDomi('.logged_in_section',{speed: 2000});
-        fold.foldUp(function () {
-          $('.logged_in_section').slideUp();
-        });
-      }
+      $('.tweet_container').fadeOut(function () {
+        $('.tweet_container').remove();
+        $('.submit_button').val('Demystifying...').animate({backgroundColor: '#ff6626', color: '#ffffff'});
+        if ( $('.logged_in_section').length > 0 ) {
+          var fold = new OriDomi('.logged_in_section',{speed: 2000});
+          fold.foldUp(function () {
+            $('.logged_in_section').slideUp(function () {
+              $('.logged_in_section').remove();
+            });
+          });
+        }
+      });
+      
     },
 
     error: function () {
