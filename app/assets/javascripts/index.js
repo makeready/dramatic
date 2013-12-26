@@ -109,11 +109,10 @@ function ajax(url) {
     },
 
     error: function () {
-      NProgress.start();
       ajax(url);
     },
 
-    complete: function () {
+    success: function () {
       NProgress.done();
     }
 
