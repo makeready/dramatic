@@ -46,12 +46,15 @@
   width: 100%;
   height: $footer-height;
   line-height: $footer-height;
-  font-size: 18px;
+  font-size: 15px;
   a {
     text-decoration: none;
   }
-  :hover, :link, :visited {
+  :link, :visited {
     color: inherit;
+  }
+  :hover {
+    color: #ffffff;
   }
 }
 
@@ -60,15 +63,15 @@
 .logged_in_section {
   padding: 10px;
   padding-bottom: 25px;
+  margin-bottom: 20px;
   border: 1px solid black;
-  height: 320px;
-  border: 5px solid rgba(0,0,0,0.3);
+  height: 350px;
 }
 
 .profile_card {
   display: inline-block;
   width: 250px;
-  height: 300px;
+  height: 340px;
   padding: 5px;
   float: left;
   background-color: rgba(255,255,255,0.8);
@@ -106,15 +109,25 @@
   margin-left: 290px;
 }
 
+
 .recent_tweets_header {
   background-color: rgba(255,255,255,0.8);
   margin-bottom: 5px;
 }
 
+.recent_tweets_feed{
+  overflow-y: hidden;
+  height: 294px;
+}
+
+.tweet_container{
+  margin-top:0px
+}
+
 .tweet_card {
   background-color: rgba(255,255,255,0.95);
   margin-bottom: 5px;
-  height: 83px;
+  height: 93px;
   cursor: pointer;
   overflow: hidden;
 }
@@ -161,7 +174,7 @@
   padding: 5px;
   position: relative;
   text-decoration: none;
-  top: 3px;
+  cursor: pointer;
   :link, :visited {
     color: #000000;
   }
@@ -171,7 +184,7 @@
   }
 }
 
-a.paginate_button:hover {
+.paginate_button:hover {
   background-color: $dark-grey-color;
   opacity: 0.8;
   color: #ffffff;
@@ -183,7 +196,8 @@ a.paginate_button:hover {
 
 .prev {
   position: absolute;
-  left: 270px;
+  left: 530px;
+  display: none;
 }
 
 .next {
@@ -201,7 +215,7 @@ a.paginate_button:hover {
   font-size: 28px;
   border: 5px solid rgba(255,255,255,0.5);
   padding-left: 5px;
-  margin: 20px 0;
+  margin-bottom: 20px;
   outline: none;
   background: asset-url('twitter_trans.png') no-repeat left center;
   background-color: #ffffff;
@@ -238,7 +252,7 @@ input.submit_button:focus {
   color: $dark-grey-color;
   padding: 10px 0;
   h3 {
-    color: $grey-color;
+    color: rgba(0,0,0,0.7);
   }
   p {
     margin: 0 100px;
@@ -282,14 +296,45 @@ input.submit_button:focus {
   margin-right: 40px;
 }
 
+.reply {
+  display: block;
+  width: 100%;
+  clear: both;
+}
+
+.notweets {
+  padding: 20px 0;
+  background-color: rgba(0,0,0,0.4);
+  margin: 25px 0;
+  cursor: pointer;
+}
+
+#not_logged_in {
+  margin: auto;   
+  position: absolute;   
+  top: 0; left: 0; bottom: 0; right: 0;
+  width: 700px;
+  height: 50%;
+}
 
 
+/* other */
 
+.intro_text {
+  margin-top: 15px;
+}
 
+.footerright {
+  float: right;
+  display: inline;
+  margin-right: 30px;
+  color: rgba(255,255,255,0.4);
+}
 
-
-
-
+.api_limit {
+  background-color: rgba(255,255,255,0.9);
+  padding: 10px 0;
+}
 
 
 

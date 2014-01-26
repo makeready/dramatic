@@ -1,8 +1,5 @@
 $(document).ready(function () {
 
-  // init flowtype
-  $('h1').flowtype();
-
   // init AJAX
   set_ajax();
 
@@ -30,17 +27,45 @@ $(document).ready(function () {
    $('.profile_text').html(username);
   });
 
+  //functionality for "older" and "newer" buttons
+
+  $('.next').on('click', function(){
+    var current_val = $('.tweet_container').css('margin-top');
+    if (current_val == '-18816px'){
+      $('.next').fadeOut();
+    }
+    if (parseInt(current_val,10) > -19110){
+      $('.prev').fadeIn();
+      var next_val = parseInt(current_val, 10) - 294 + 'px';
+      $('.tweet_container').animate({'margin-top':next_val},400);
+    }
+  });
+  $('.prev').on('click', function(){
+    var current_val = $('.tweet_container').css('margin-top');
+    if (current_val == '-294px'){
+      $('.prev').fadeOut();
+    }
+    if (parseInt(current_val,10) < 0){
+      $('.next').fadeIn();
+      var next_val = parseInt(current_val, 10) + 294 + 'px';
+      $('.tweet_container').animate({'margin-top':next_val},400);
+    }
+  });
+
   // enable submit button on input
   var submitted = false;
 
   $('.biginput').keyup(function() {
-   if($(this).val() !== '') {
-    if (submitted === false) {
-      $('.submit_button').fadeIn();
-        }
-  } else {
-    $('.submit_button').fadeOut();
-  }
+    if($(this).val() !== '' && submitted === false ) {
+      var input = $('.biginput').val();
+      if ( input.indexOf("twitter.com/") !== -1 ) {
+        $('.submit_button').fadeIn();
+          } else {
+            $('.submit_button').fadeOut();
+          }
+    } else {
+      $('.submit_button').fadeOut();
+    }
   });
 
 });
@@ -51,127 +76,55 @@ $(document).ready(function () {
 function set_ajax() {
   $('.submit_button').on('click', function (event) {
     event.preventDefault();
+    $('.submit_button').attr("disabled", true);
     submitted = true;
     url = $('.biginput').val();
-
-    $.ajax({
-      method: 'POST',
-      dataType: 'json',
-      data: {tweet: {url: url}},
-      url: '/tweets',
-
-      beforeSend: function () {
-        NProgress.start();
-        $('.submit_button').val('Contacting Twitter, please wait...').animate({backgroundColor: '#ff6626'});
-          if ( $('.logged_in_section').length > 0 ) {
-            var fold = new OriDomi('.logged_in_section',{speed: 3000});
-            fold.foldUp(function () {
-              $('.logged_in_section').slideUp();
-            });
-          }
-      },
-
-      complete: function () {
-        NProgress.done();
-      }
-
-    }).done(function(data){
-      console.log("AJAX success");
-      console.log(data);
-      $('.submit_button').fadeOut(1000);
-      $('.biginput').fadeOut(500);
-      render_view(data);
-    }).fail(function () {
-      console.log("AJAX failed");
-      $('#results').append("AJAX failed, please try again.");
-    });
+    ajax(url);
   });
 }
 
-// for data object [0] = orig tweet, [1] = array of returned tweets, [2] = array of matched keywords
-function render_view(data){
-  var origTweet = "<div class='orig'><h3>" + data[0]['user']['name'] + "</h3><p>" + data[0]['text'] + "</p></div>";
-  $('#results').append(origTweet);
-  $('#results').fadeIn(1000);
-  switch (data[1].length) {
-  case 0:
-    $('#results').append("<br>No relevant tweets, please try another");
-    break;
-  case 1:
-    make_tweet(data[1][0],'center', data[2]);
-    break;
-  case 2:
-    make_tweet(data[1][1],'left', data[2]);
-    make_tweet(data[1][0],'right', data[2]);
-    break;
-  default:
-    $('#results').append("<br>Data Error, please try again");
-    break;
-  }
-  $('#results').append("<div class='clearfix'></div>");
-  add_recursive_elements();
-  bind_events();
-}
+// ajax itself
+function ajax(url) {
+  $.ajax({
+    method: 'POST',
+    dataType: 'script',
+    data: {tweet: {url: url}},
+    url: '/tweets',
 
-//creates tweet card replay
-function make_tweet(data, place, words) {
-  var answerCard = "<div class='answercard empty " + place + "' data-user='" + data[0]['user']['screen_name'] + "' data-id='" + data[0]['id_str'] + "'><div class='answer_img_section'></div><div class='answer_title_section'></div><div class='answer_text_section'></div></div>";
-  var title = "@" + data[0]['user']['screen_name'] + " <span class='highlight'>(" + data[1] + ")</span>";
-  var text = data[0]['text'];
-  var textArray = text.toLowerCase().split(" ");
-  text = match_keywords(textArray, words);
-  var img = "<img class='tweet_card_img' src='" + data[0]['user']['profile_image_url'] + "'>";
-  var bluepath = '';
-  if ( data[0]['retweeted_status'] === undefined ) {
-    bluepath = "/assets/twitter_blue.png";
-  } else {
-    bluepath = "/assets/rt_blue.png";
-  }
-  var twit_img = "<a class='blue_twitter_link' href='http://twitter.com/" + data[0]['user']['screen_name'] + "/status/" + data[0]['id_str'] + "' target='_blank' style='visibility:hidden;'><img src='" + bluepath + "'></a>";
-  $('#results').append(answerCard);
-  var target = $('.answercard.empty');
-  target.find('.answer_img_section').append(img).append(twit_img);
-  target.find('.answer_title_section').append(title);
-  target.find('.answer_text_section').append(text);
-  $('.empty').removeClass('empty');
-}
+    beforeSend: function () {
+      NProgress.start();
+      $('.submit_button').val('Demystifying...').animate({backgroundColor: '#ff6626', color: '#ffffff'});
+      $('.tweet_container').fadeOut(function () {
+        $('.tweet_container').remove();
+        if ( $('.logged_in_section').length > 0 ) {
+          var fold = new OriDomi('.logged_in_section',{speed: 2000});
+          fold.foldUp(function () {
+            $('.logged_in_section').slideUp(function () {
+              $('.logged_in_section').remove();
+            });
+          });
+        }
+      });
+      
+    },
 
-// adds highlight span to matching words
-function match_keywords(textArray, words) {
-  var returnArray = [];
-  for ( i=0 ; i < textArray.length ; i++ ) {
-    var single = textArray[i].replace(/[^a-zA-Z0-9]/g,'');
-    var answer = $.inArray(single,words);
-    if ( answer === -1 ) {
-      returnArray.push(textArray[i]);
-    } else {
-      returnArray.push("<span class='highlight'>" + textArray[i] + "</span>");
+    error: function () {
+      ajax(url);
+    },
+
+    success: function () {
+      NProgress.done();
     }
-  }
-  return returnArray.join(" ");
+
+  });
 }
 
-// adds new search box and button for recursive searching while removing old elements
-function add_recursive_elements() {
-  $('.biginput').remove();
-  $('.logged_in_section').remove();
-  $('.submit_button').remove();
-  var array = $('#results').find('.answercard');
-  var element;
-  if ( array.length > 0 ) {
-    element = array[array.length - 1];
-  } else {
-    element = $('#results').find('.orig');
-  }
-  $('#results').removeAttr('id');
-  var button = "<input class='submit_button' type='submit' value='Contextualize' style='display:none'>";
-  var search = "<input class='biginput show_twitter_icon' type='text'>";
-  var results = "<div id='results' class='center'></div>";
-  $(element).after(button).after(search).after(results);
-}
 
 // bind mouseover and onclick events to new objects
 function bind_events() {
+  console.log('binding events');
+  $('.reply').fadeIn();
+  // hover events
   $('.answercard').mouseenter(function () {
     $(this).css('background-color','#616161');
     $(this).css('color', '#ffffff');
@@ -186,24 +139,28 @@ function bind_events() {
     $(this).find('.blue_twitter_link').css('visibility','hidden');
   });
 
-  // tweet card paste to box
-  $('.answercard').on('click', function (){
-    var id = $(this).data('id');
-    var user = $(this).data('user');
-    $('.biginput').val('http://twitter.com/' + user + '/status/' + id);
-    $('.biginput').keyup();
+  // twitter card title hover & click
+  $('.answer_title_section').mouseenter(function () {
+    $(this).css('background-color','rgba(0,0,0,0.2)');
   });
-
-  // fade in new submit button
-  var submitted = false;
-  $('.biginput').keyup(function() {
-   if($(this).val() !== '') {
-    if (submitted === false) {
-      $('.submit_button').fadeIn();
-        }
-  } else {
-    $('.submit_button').fadeOut();
-  }
+  $('.answer_title_section').mouseleave(function () {
+    $(this).css('background-color','rgba(0,0,0,0.1)');
+  });
+  $('.answer_title_section').on('click', function (){
+    var user = $(this).parent().data('user');
+    var url = "http://twitter.com/" + user;
+    window.open(url , '_blank');
+  });
+  // tweet card paste to box
+  var clicked = false;
+  $('.answercard').on('click', function (){
+    if ( clicked == false ) {
+      clicked = true;
+      var id = $(this).data('id');
+      var user = $(this).data('user');
+      var url = 'http://twitter.com/' + user + '/status/' + id;
+      ajax(url);
+    }
   });
 
   //add ajax functionality

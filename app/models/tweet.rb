@@ -68,7 +68,7 @@ class Tweet < ActiveRecord::Base
 
   def create_empty_list
     timestamp = Time.now.to_i.to_s
-    response = api_call("/1.1/lists/create.json",[["name", "context#{timestamp}"]],"POST")
+    response = api_call("/1.1/lists/create.json",[["name", "context#{timestamp}"],["mode", "private"]],"POST")
     return JSON.parse(response.body)["id_str"]
   end
 
@@ -144,9 +144,20 @@ class Tweet < ActiveRecord::Base
 
   end
 
+  def highlight_keyword(tweet_text,keywords)
+    tweet_text_array = tweet_text.split
+    sentence = []
+    tweet_text_array.each do |word|
+      no_punc_word = word.gsub(/[^a-zA-Z0-9]/,'')
+      if keywords.include?(no_punc_word.downcase)
+        word.gsub!( no_punc_word ,"<span class='highlight'>#{no_punc_word}</span>")
+      end
+      sentence << word
+    end
+    sentence.join(" ")
+  end
+
   def generate_context(numtweets,listsize)
-
-
     tweet_json = load_tweet_json
 
     return tweet_json["in_reply_to_status_id_str"] if tweet_json["in_reply_to_status_id_str"]
@@ -159,16 +170,33 @@ class Tweet < ActiveRecord::Base
     puts "Total tweets scanned: #{parsed_list.length}"
     if parsed_list != []
       parsed_list.each do |tweet|
-        #puts tweet["text"]
+        link_score = 0
+        prev_match = false
         clean_tweet = find_keywords(tweet["text"])
-        keywords.each do |keyword|
-          clean_tweet.each do |clean_tweet_keyword|
+        clean_tweet.each do |clean_tweet_keyword|
+          if prev_match == true 
+            link_score += 1
+            puts 'link_score + 1'
+          elsif prev_match == false && link_score > 1
+            puts 'link score:: ' + link_score.to_s
+            match_score[tweet] += link_score
+            link_score = 0
+          end
+          prev_match = false
+          keywords.each do |keyword|        
             if clean_tweet_keyword == keyword
-              match_score[tweet] += 1 
+              match_score[tweet] += 1
+              prev_match = true
+
               puts "Added 1 to match score, #{clean_tweet} included #{keyword}."
               puts "New match score is #{match_score[tweet]}."
             end
           end
+        end
+        if link_score > 1
+          puts 'link score:: ' + link_score.to_s
+          match_score[tweet] += link_score
+          link_score = 0
         end
       end
     end
@@ -177,12 +205,23 @@ class Tweet < ActiveRecord::Base
 
     found_tweets = take_top_n_matches(match_score,numtweets)
 
+    found_tweets.each do |tweet|
+      if tweet[0]['retweeted_status']
+        clean_tweet = tweet[0]["retweeted_status"]["text"]
+        tweet[0]["retweeted_status"]["text"] = highlight_keyword(clean_tweet,keywords)
+      else
+        clean_tweet = tweet[0]["text"]
+        tweet[0]["text"] = highlight_keyword(clean_tweet,keywords)
+      end
+    end
+
     #found_tweets.each {|tweet| puts "#{tweet[0]["text"]} has a score of #{tweet[1]}." }
     
     data = []
     data[0] = tweet_json
     data[1] = found_tweets
     data[2] = keywords
+
 
     # DATA STRUCTURE: [{original_tweet},[[{found_tweet1}, match_score, tiebreak_score],[{found_tweet2}, match_score, tiebreak_score]],["kw1","kw2","kw3"]]
 
