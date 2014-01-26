@@ -15,3 +15,5 @@ stop fake loading bar if javascript has halted
 tweet with a link should win a tiebreak
 
 clicking on result RTs does not append the original tweet link
+
+use VCR to mock API results
