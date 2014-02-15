@@ -7,22 +7,17 @@ footer-colored border around user.feed box
 
 ***need to tell the user something if user.feed is blank
 
-***need to handle API user overlimits
-
-
 add "was this useful?" statistic tracking at the end
 
 Cache dictionary
 
 stop fake loading bar if javascript has halted
 
-
 debug tiebreak
-
 
 tweet with a link should win a tiebreak
 
+use VCR to mock API results
+
 implement match_score tiebreakers
 
-
-clicking on result RTs does not append the original tweet link
