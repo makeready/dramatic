@@ -159,8 +159,8 @@ class Tweet < ActiveRecord::Base
 
   def generate_context(numtweets,listsize)
     tweet_json = load_tweet_json
-
-    return tweet_json["in_reply_to_status_id_str"] if tweet_json["in_reply_to_status_id_str"]
+    puts tweet_json
+    #return tweet_json["in_reply_to_status_id_str"] if tweet_json["in_reply_to_status_id_str"]
 
     match_score = Hash.new(0)
 
@@ -221,7 +221,6 @@ class Tweet < ActiveRecord::Base
     data[0] = tweet_json
     data[1] = found_tweets
     data[2] = keywords
-
 
     # DATA STRUCTURE: [{original_tweet},[[{found_tweet1}, match_score, tiebreak_score],[{found_tweet2}, match_score, tiebreak_score]],["kw1","kw2","kw3"]]
 
