@@ -7,7 +7,6 @@ class TweetsController < ApplicationController
   def create
     @tweet = Tweet.new(tweet_params)
     @tweet.user_id = current_user.id
-    if @tweet.save
       @data = @tweet.generate_context(2,1000)
       # debugger
       # DATA STRUCTURE: [{original_tweet},[[{found_tweet1}, match_score],[{found_tweet2}, match_score]],["kw1","kw2","kw3"]]
@@ -15,10 +14,6 @@ class TweetsController < ApplicationController
         format.html {head :ok}
         format.js { render partial: "render#{@data[1].length}" }
       end
-      
-    else
-      render :new
-    end
   end
 
   private
